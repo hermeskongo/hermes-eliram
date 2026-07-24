@@ -68,6 +68,22 @@ export const content = {
     lead: 'Une sélection parmi 17 projets menés à bien.',
     projects: [
       {
+        name: 'Apicore',
+        year: '2026',
+        category: 'E-commerce · Fullstack',
+        badge: 'Démo en ligne',
+        blurb:
+          "Boutique e-commerce complète de matériel apicole pour l'Afrique de l'Ouest : catalogue de 500+ produits filtré par catégorie, panier, checkout et suivi de commande. Le tout doublé d'un back-office admin complet — gestion des produits, commandes en temps réel et analytics (chiffre d'affaires, panier moyen, top produits). Next.js, PostgreSQL/Prisma et authentification NextAuth.",
+        tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth'],
+        links: [
+          { label: 'Voir le site', url: 'https://apicore-eta.vercel.app/' },
+          { label: 'Dashboard admin', url: 'https://apicore-eta.vercel.app/admin' },
+        ],
+        demo: { email: 'admin@monshop.com', password: 'admin123' },
+        url: 'https://apicore-eta.vercel.app/',
+        image: '/projects/apicore-cover.webp',
+      },
+      {
         name: 'Habitudes',
         year: '2026',
         category: 'Mobile',

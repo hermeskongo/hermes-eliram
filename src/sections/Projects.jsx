@@ -69,6 +69,24 @@ function Card({ p }) {
         ))}
       </ul>
 
+      {p.demo && (
+        <div className="mt-4 w-fit rounded-xl bg-paper2 p-3.5 ring-1 ring-line">
+          <div className="flex items-center gap-1.5 font-mono text-[0.68rem] uppercase tracking-[0.12em] text-muted">
+            <svg viewBox="0 0 24 24" fill="none" className="h-3.5 w-3.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" />
+              <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+            </svg>
+            Démo admin — testez le dashboard
+          </div>
+          <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 font-mono text-xs">
+            <dt className="text-faint">email</dt>
+            <dd className="select-all text-graphite">{p.demo.email}</dd>
+            <dt className="text-faint">pass</dt>
+            <dd className="select-all text-graphite">{p.demo.password}</dd>
+          </dl>
+        </div>
+      )}
+
       {hasLinks && (
         <div className="mt-4 flex flex-wrap gap-x-5 gap-y-1.5">
           {p.links.map((l) => (
