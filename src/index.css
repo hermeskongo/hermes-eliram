@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #f2f0ea;
+}
+
+body {
+  font-family: 'Geist', ui-sans-serif, system-ui, sans-serif;
+  color: #17150f;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+.font-display {
+  font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+}
+.font-mono {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Paper grain — the black-orchid texture reads directly on a light ground. */
+.tex-paper {
+  background-image: url('/textures/black-orchid.png');
+  background-repeat: repeat;
+  background-size: 300px 300px;
+  opacity: 0.05;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hover-one-dims-the-rest list. */
+.dimlist > * {
+  transition: opacity 0.35s ease;
+}
+.dimlist:hover > * {
+  opacity: 0.4;
+}
+.dimlist > *:hover {
+  opacity: 1;
+}
+@media (hover: none) {
+  .dimlist:hover > * {
+    opacity: 1;
+  }
+}
+
+/* Blinking terminal caret. */
+@keyframes caret {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 0.55em;
+  height: 1.05em;
+  margin-left: 0.12em;
+  transform: translateY(0.14em);
+  background: currentColor;
+  animation: caret 1.1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret::after {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::selection {
+  background: #17150f;
+  color: #f2f0ea;
+}
+
+*:focus-visible {
+  outline: 2px solid #17150f;
+  outline-offset: 3px;
+  border-radius: 2px;
+}

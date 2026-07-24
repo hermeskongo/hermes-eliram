@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
+  <rect width="1200" height="800" fill="#ece8de"/>
+  <pattern id="d" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="1.4" cy="1.4" r="1.4" fill="#17150f" fill-opacity="0.05"/></pattern>
+  <rect width="1200" height="800" fill="url(#d)"/>
+  <rect x="0.5" y="0.5" width="1199" height="799" fill="none" stroke="#17150f" stroke-opacity="0.10"/>
+  <text x="64" y="682" font-family="'JetBrains Mono', monospace" font-size="24" letter-spacing="5" fill="#726c60">LIVRAISON DE REPAS</text>
+  <text x="60" y="748" font-family="'Bricolage Grotesque', Arial, sans-serif" font-weight="700" font-size="76" fill="#17150f">ELGO</text>
+  <text x="1140" y="72" text-anchor="end" font-family="'JetBrains Mono', monospace" font-size="20" fill="#a8a293">APERÇU — PLACEHOLDER</text>
+</svg>
