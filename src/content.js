@@ -126,7 +126,7 @@ export const content = {
           "Station météo connectée, primée au concours Smart-Elec 2026 : température, humidité, pression et luminosité en temps réel, avec pilotage automatique et manuel d'un ventilateur. Arduino et capteurs, backend Python, dashboard web live.",
         tags: ['Arduino', 'Python', 'Flask-SocketIO', 'IoT'],
         url: 'https://github.com/hermeskongo/IoT_weather_project',
-        image: '/projects/iot-weather-cover.webp',
+        image: '',
       },
     ],
   },
