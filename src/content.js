@@ -13,7 +13,7 @@ export const content = {
     status: 'Disponible',
     socials: [
       { label: 'GitHub', url: 'https://github.com/hermeskongo' },
-      { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
+      // { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
     ],
   },
 
