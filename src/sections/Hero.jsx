@@ -1,6 +1,8 @@
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { motion, useScroll } from 'framer-motion'
 import { content } from '../content'
 import Character from '../components/Character'
+import { useScrub, useScrubLinear } from '../hooks/useScrub'
 
 const ease = [0.16, 1, 0.3, 1]
 const rise = (delay) => ({
@@ -13,13 +15,22 @@ export default function Hero() {
   const { identity } = content
   const [line1, line2] = identity.display.split('\n')
 
+  const ref = useRef(null)
+  // Le hero part vers le haut quand on le quitte : le texte plus vite que
+  // l'illustration, ce qui creuse la profondeur sans effet de parallaxe voyant.
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
+  const textY = useScrub(scrollYProgress, [0, 1], [0, -110], 0)
+  const charY = useScrub(scrollYProgress, [0, 1], [0, -34], 0)
+  const fade = useScrubLinear(scrollYProgress, [0, 0.75], [1, 0], 1)
+
   return (
     <section
+      ref={ref}
       id="top"
       className="grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-16 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12"
     >
       {/* Left — identity */}
-      <div className="order-2 lg:order-1">
+      <motion.div style={{ y: textY, opacity: fade }} className="order-2 lg:order-1">
         <motion.p
           {...rise(0.55)}
           className="mb-6 font-mono text-sm uppercase tracking-[0.22em] text-muted"
@@ -75,12 +86,15 @@ export default function Hero() {
             {identity.email}
           </a>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Right — illustrated character */}
-      <div className="order-1 mx-auto w-full max-w-[440px] lg:order-2">
+      <motion.div
+        style={{ y: charY }}
+        className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
+      >
         <Character />
-      </div>
+      </motion.div>
     </section>
   )
 }

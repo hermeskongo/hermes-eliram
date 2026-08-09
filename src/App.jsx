@@ -16,6 +16,7 @@
   FORM: illustrated editorial page punctuated by a real code-editor window.
 */
 import Loader from './components/Loader'
+import ScrollProgress from './components/ScrollProgress'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Hero from './sections/Hero'
@@ -29,6 +30,7 @@ export default function App() {
   return (
     <>
       <Loader />
+      <ScrollProgress />
       <div className="tex-paper pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
       <Header />
       <main className="relative z-10 mx-auto max-w-[1240px] px-6 sm:px-10">

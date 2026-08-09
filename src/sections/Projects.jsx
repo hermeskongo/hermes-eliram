@@ -1,10 +1,17 @@
+import { useRef } from 'react'
+import { motion } from 'framer-motion'
 import { content } from '../content'
 import Section from '../components/Section'
 import Reveal from '../components/Reveal'
+import { useSectionProgress, useScrub } from '../hooks/useScrub'
 
 const isPlaceholder = (s) => typeof s === 'string' && s.includes('[À REMPLIR]')
 
 function Card({ p }) {
+  const frameRef = useRef(null)
+  const progress = useSectionProgress(frameRef)
+  const imgY = useScrub(progress, [0, 1], ['-4%', '4%'], '0%')
+
   const named = !isPlaceholder(p.name)
   const hasLinks = Array.isArray(p.links) && p.links.length > 0
   // The whole card is a link only when there's a single destination.
@@ -12,11 +19,14 @@ function Card({ p }) {
 
   const Inner = (
     <div className="group flex h-full flex-col">
-      <div className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-paper2 ring-1 ring-line">
-        <img
+      <div ref={frameRef} className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-paper2 ring-1 ring-line">
+        {/* L'image est plus haute que son cadre et derive a l'interieur pendant
+            le defilement : la vignette respire au lieu d'etre posee. */}
+        <motion.img
           src={p.image}
           alt={named ? `Aperçu — ${p.name}` : 'Aperçu du projet'}
-          className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+          style={{ y: imgY }}
+          className="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
           loading="lazy"
         />
         {wholeCardLink && (
