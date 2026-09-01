@@ -47,8 +47,8 @@ export default function Header() {
       }`}
     >
       <div className="mx-auto flex max-w-[1240px] items-center justify-between px-6 py-4 sm:px-10">
-        <a href="#top" className="font-mono text-lg font-bold tracking-tight text-ink" aria-label="Haut de page">
-          HK<span className="text-faint">_</span>
+        <a href="#top" className="-my-2 inline-flex min-h-[44px] items-center py-2 font-mono text-lg font-bold tracking-tight text-ink" aria-label="Haut de page">
+          HK<span aria-hidden="true" className="text-faint">_</span>
         </a>
 
         <nav className="hidden items-center gap-8 md:flex" aria-label="Sections">
@@ -59,14 +59,14 @@ export default function Header() {
                 key={n.id}
                 href={`#${n.id}`}
                 aria-current={on ? 'true' : undefined}
-                className={`relative font-mono text-[0.72rem] uppercase tracking-[0.14em] transition-colors duration-200 hover:text-ink ${
+                className={`relative -my-3 inline-flex min-h-[44px] items-center py-3 font-mono text-[0.72rem] uppercase tracking-[0.14em] transition-colors duration-200 hover:text-ink ${
                   on ? 'text-ink' : 'text-muted'
                 }`}
               >
                 {n.label}
                 <span
                   aria-hidden="true"
-                  className={`absolute -bottom-1.5 left-0 h-px bg-ink transition-all duration-300 ease-out ${
+                  className={`absolute bottom-2 left-0 h-px bg-ink transition-all duration-300 ease-out ${
                     on ? 'w-full opacity-100' : 'w-0 opacity-0'
                   }`}
                 />

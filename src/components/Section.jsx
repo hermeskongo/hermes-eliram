@@ -18,7 +18,7 @@ export default function Section({ id, kicker, lead, accent = '#ff7b72', children
       <Reveal className="mb-12 sm:mb-16">
         <div ref={headRef}>
           <span className="font-mono text-xs uppercase tracking-[0.18em] text-muted">
-            <span className="text-faint">//</span> {kicker}
+            <span aria-hidden="true" className="text-faint">//</span> {kicker}
           </span>
           <motion.span
             aria-hidden="true"

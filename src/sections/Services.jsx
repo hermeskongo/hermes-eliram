@@ -27,7 +27,7 @@ export default function Services() {
                   aria-pressed={active === i}
                   className="group flex w-full items-center gap-6 border-b border-line py-7 text-left"
                 >
-                  <span className={`font-mono text-lg tabular ${active === i ? 'text-ink' : 'text-faint'}`}>
+                  <span className={`font-mono text-lg tabular ${active === i ? 'text-ink' : 'text-muted'}`}>
                     {i + 1}
                   </span>
                   <span
@@ -53,7 +53,7 @@ export default function Services() {
 
         <Reveal delay={0.1}>
           <div className="relative min-h-[340px] overflow-hidden rounded-2xl bg-paper2 p-10 ring-1 ring-line">
-            <span className="font-display pointer-events-none absolute -right-2 -top-6 select-none text-[11rem] font-bold leading-none text-ink/[0.05]">
+            <span aria-hidden="true" className="font-display pointer-events-none absolute -right-2 -top-6 select-none text-[11rem] font-bold leading-none text-ink/[0.05]">
               {active + 1}
             </span>
             <AnimatePresence mode="wait">
@@ -70,7 +70,7 @@ export default function Services() {
                 <p className="mt-4 max-w-md text-pretty text-lg font-light leading-relaxed text-graphite">
                   {current.desc}
                 </p>
-                <span className="mt-auto pt-8 font-mono text-xs uppercase tracking-[0.3em] text-faint">
+                <span className="mt-auto pt-8 font-mono text-xs uppercase tracking-[0.3em] text-graphite">
                   Service {active + 1} / {services.items.length}
                 </span>
               </motion.div>
@@ -84,7 +84,7 @@ export default function Services() {
         {services.items.map((s, i) => (
           <Reveal as="div" key={s.title} delay={i * 0.05}>
             <div className="relative overflow-hidden rounded-2xl bg-paper2 p-6 ring-1 ring-line">
-              <span className="font-display pointer-events-none absolute -right-1 -top-4 text-7xl font-bold leading-none text-ink/[0.06]">
+              <span aria-hidden="true" className="font-display pointer-events-none absolute -right-1 -top-4 text-7xl font-bold leading-none text-ink/[0.06]">
                 {i + 1}
               </span>
               <ServiceIcon index={i} className="h-11 w-11 text-ink" />

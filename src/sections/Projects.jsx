@@ -7,6 +7,13 @@ import { useSectionProgress, useScrub } from '../hooks/useScrub'
 
 const isPlaceholder = (s) => typeof s === 'string' && s.includes('[À REMPLIR]')
 
+/** Assombrit une couleur hexadecimale d'un facteur donne. */
+function darken(hex, amount) {
+  const n = parseInt(hex.slice(1), 16)
+  const ch = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map((v) => Math.round(v * (1 - amount)))
+  return `#${ch.map((v) => v.toString(16).padStart(2, '0')).join('')}`
+}
+
 function Card({ p }) {
   const frameRef = useRef(null)
   const progress = useSectionProgress(frameRef)
@@ -20,15 +27,24 @@ function Card({ p }) {
   const Inner = (
     <div className="group flex h-full flex-col">
       <div ref={frameRef} className="relative aspect-[3/2] overflow-hidden rounded-2xl bg-paper2 ring-1 ring-line">
-        {/* L'image est plus haute que son cadre et derive a l'interieur pendant
-            le defilement : la vignette respire au lieu d'etre posee. */}
-        <motion.img
-          src={p.image}
-          alt={named ? `Aperçu — ${p.name}` : 'Aperçu du projet'}
-          style={{ y: imgY }}
-          className="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
-          loading="lazy"
-        />
+        {p.image ? (
+          /* L'image est plus haute que son cadre et derive a l'interieur pendant
+             le defilement : la vignette respire au lieu d'etre posee. */
+          <motion.img
+            src={p.image}
+            alt={named ? `Aperçu — ${p.name}` : 'Aperçu du projet'}
+            style={{ y: imgY }}
+            className="absolute inset-x-0 -top-[8%] h-[116%] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"
+            loading="lazy"
+          />
+        ) : (
+          /* Sans visuel, un carton typographique plutot qu'une image cassee. */
+          <div className="absolute inset-0 grid place-items-center px-6 text-center">
+            <span className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-graphite">
+              {p.category}
+            </span>
+          </div>
+        )}
         {wholeCardLink && (
           <span className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-paper/90 text-ink opacity-0 shadow-sm backdrop-blur transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100">
             ↗
@@ -42,10 +58,13 @@ function Card({ p }) {
           {p.badge &&
             (() => {
               const c = p.badgeColor || '#3fb950' // default: good green
+              // A 10px sur papier, la couleur vive tombe a 2.2:1. Le texte
+              // prend une version assombrie ; la pastille garde le ton d'origine.
+              const dark = darken(c, 0.42)
               return (
                 <span
                   className="inline-flex items-center gap-1.5 rounded-full px-2 py-0.5 text-[0.65rem] normal-case tracking-normal"
-                  style={{ backgroundColor: `${c}1a`, color: c, boxShadow: `inset 0 0 0 1px ${c}33` }}
+                  style={{ backgroundColor: `${c}1a`, color: dark, boxShadow: `inset 0 0 0 1px ${c}33` }}
                 >
                   <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: c }} />
                   {p.badge}
@@ -53,7 +72,7 @@ function Card({ p }) {
               )
             })()}
         </span>
-        <span className="font-mono text-xs tabular text-faint">{p.year}</span>
+        <span className="font-mono text-xs tabular text-muted">{p.year}</span>
       </div>
       <h3
         className={`font-display mt-1.5 text-2xl font-semibold tracking-tight sm:text-[1.7rem] ${
@@ -73,7 +92,7 @@ function Card({ p }) {
 
       <ul className="mt-4 flex flex-wrap gap-x-2 gap-y-2">
         {p.tags.map((t) => (
-          <li key={t} className="rounded-md bg-paper2 px-2.5 py-1 font-mono text-[0.7rem] text-muted ring-1 ring-line">
+          <li key={t} className="rounded-md bg-paper2 px-2.5 py-1 font-mono text-[0.7rem] text-graphite ring-1 ring-line">
             {t}
           </li>
         ))}
@@ -89,9 +108,9 @@ function Card({ p }) {
             Démo admin — testez le dashboard
           </div>
           <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-0.5 font-mono text-xs">
-            <dt className="text-faint">email</dt>
+            <dt className="text-muted">email</dt>
             <dd className="select-all text-graphite">{p.demo.email}</dd>
-            <dt className="text-faint">pass</dt>
+            <dt className="text-muted">pass</dt>
             <dd className="select-all text-graphite">{p.demo.password}</dd>
           </dl>
         </div>
@@ -105,7 +124,7 @@ function Card({ p }) {
               href={l.url}
               target="_blank"
               rel="noreferrer"
-              className="group/link inline-flex items-center gap-1 font-mono text-xs text-graphite transition-colors hover:text-ink"
+              className="group/link -my-2 inline-flex min-h-[44px] items-center gap-1 py-2 font-mono text-xs text-graphite transition-colors hover:text-ink"
             >
               {l.label}
               <span className="transition-transform duration-200 group-hover/link:translate-x-0.5">↗</span>

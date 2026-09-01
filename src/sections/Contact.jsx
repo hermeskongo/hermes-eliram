@@ -10,7 +10,7 @@ export default function Contact() {
     <Section id="contact" kicker="Contact" lead={contact.lead} accent="#7ee787">
       <Reveal>
         <p className="mb-8 max-w-lg text-pretty text-xl font-light text-graphite">{contact.body}</p>
-        <a href={`mailto:${identity.email}`} className="group inline-flex max-w-full items-center gap-2.5 text-ink sm:gap-4">
+        <a href={`mailto:${identity.email}`} className="group -my-2 inline-flex min-h-[44px] max-w-full items-center gap-2.5 py-2 text-ink sm:gap-4">
           <span className="font-display whitespace-nowrap text-[clamp(1.25rem,5.2vw,3.6rem)] font-semibold leading-none tracking-[-0.02em] underline decoration-line decoration-2 underline-offset-[6px] transition-colors group-hover:decoration-ink">
             {identity.email}
           </span>
@@ -35,7 +35,7 @@ export default function Contact() {
                     href={s.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="font-mono text-sm uppercase tracking-[0.14em] text-muted transition-colors duration-200 hover:text-ink"
+                    className="-my-3 inline-flex min-h-[44px] items-center py-3 font-mono text-sm uppercase tracking-[0.14em] text-muted transition-colors duration-200 hover:text-ink"
                   >
                     {s.label}
                   </a>

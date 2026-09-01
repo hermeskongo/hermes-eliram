@@ -9,14 +9,14 @@ export default {
         paper2: '#eae6dc',
         ink: '#17150f',
         graphite: '#3a372e',
-        muted: '#726c60',
-        faint: '#a8a293',
+        muted: '#726c60',   // 4.57:1 sur le papier — plancher du texte lisible
+        faint: '#a8a293',   // 2.23:1 — reserve aux marques decoratives, jamais au texte
         line: '#e0dbcd',
         // Code-editor (GitHub-dark-ish) palette for the signature panels.
         code: {
           bg: '#0f1117',
           bar: '#0a0c11',
-          gutter: '#575d6b',
+          gutter: '#7d8492',   // 5.20:1 sur le fond du panneau
           text: '#e6edf3',
           comment: '#8b949e',
           kw: '#ff7b72',
