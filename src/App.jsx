@@ -23,6 +23,7 @@ import Hero from './sections/Hero'
 import About from './sections/About'
 import Expertise from './sections/Expertise'
 import Projects from './sections/Projects'
+import Testimonials from './sections/Testimonials'
 import Services from './sections/Services'
 import Contact from './sections/Contact'
 
@@ -31,6 +32,13 @@ export default function App() {
     <>
       <Loader />
       <ScrollProgress />
+      {/* Le premier arret au clavier saute la navigation. */}
+      <a
+        href="#top"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-5 focus:top-5 focus:z-50 focus:rounded-full focus:bg-ink focus:px-5 focus:py-3 focus:font-mono focus:text-sm focus:text-paper"
+      >
+        Aller au contenu
+      </a>
       <div className="tex-paper pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
       <Header />
       <main className="relative z-10 mx-auto max-w-[1240px] px-6 sm:px-10">
@@ -38,6 +46,7 @@ export default function App() {
         <About />
         <Expertise />
         <Projects />
+        <Testimonials />
         <Services />
         <Contact />
         <Footer />

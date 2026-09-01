@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { motion, useScroll } from 'framer-motion'
 import { content } from '../content'
 import Character from '../components/Character'
-import { useScrub, useScrubLinear } from '../hooks/useScrub'
+import { useScrub, useMedia } from '../hooks/useScrub'
 
 const ease = [0.16, 1, 0.3, 1]
 const rise = (delay) => ({
@@ -16,12 +16,18 @@ export default function Hero() {
   const [line1, line2] = identity.display.split('\n')
 
   const ref = useRef(null)
-  // Le hero part vers le haut quand on le quitte : le texte plus vite que
-  // l'illustration, ce qui creuse la profondeur sans effet de parallaxe voyant.
+  /*
+    Le hero ne s'efface plus au defilement : l'ancienne version tombait a zero
+    alors qu'un quart de la section etait encore a l'ecran — pire sur mobile,
+    ou le hero depasse la hauteur de l'ecran et disparaissait avant d'avoir ete
+    lu. Il reste donc entierement opaque ; seule une legere derive verticale
+    distingue le texte de l'illustration, et uniquement sur grand ecran, la ou
+    la section tient exactement dans la fenetre.
+  */
+  const wide = useMedia('(min-width: 1024px)')
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const textY = useScrub(scrollYProgress, [0, 1], [0, -110], 0)
-  const charY = useScrub(scrollYProgress, [0, 1], [0, -34], 0)
-  const fade = useScrubLinear(scrollYProgress, [0, 0.75], [1, 0], 1)
+  const textY = useScrub(scrollYProgress, [0, 1], [0, -56], 0)
+  const charY = useScrub(scrollYProgress, [0, 1], [0, -18], 0)
 
   return (
     <section
@@ -30,12 +36,12 @@ export default function Hero() {
       className="grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-16 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12"
     >
       {/* Left — identity */}
-      <motion.div style={{ y: textY, opacity: fade }} className="order-2 lg:order-1">
+      <motion.div style={{ y: wide ? textY : 0 }} className="order-2 lg:order-1">
         <motion.p
           {...rise(0.55)}
           className="mb-6 font-mono text-sm uppercase tracking-[0.22em] text-muted"
         >
-          <span className="text-faint">//</span> {identity.role}
+          <span aria-hidden="true" className="text-faint">//</span> {identity.role}
         </motion.p>
 
         <h1 className="font-display text-[clamp(3.2rem,10vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.035em] text-ink">
@@ -90,7 +96,7 @@ export default function Hero() {
 
       {/* Right — illustrated character */}
       <motion.div
-        style={{ y: charY }}
+        style={{ y: wide ? charY : 0 }}
         className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
       >
         <Character />

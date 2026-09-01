@@ -13,7 +13,7 @@ export const content = {
     status: 'Disponible',
     socials: [
       { label: 'GitHub', url: 'https://github.com/hermeskongo' },
-      // { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
+      { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
     ],
   },
 
@@ -21,6 +21,7 @@ export const content = {
     { id: 'about', label: 'À propos' },
     { id: 'expertise', label: 'Expertise' },
     { id: 'work', label: 'Projets' },
+    { id: 'avis', label: 'Avis' },
     { id: 'services', label: 'Services' },
     { id: 'contact', label: 'Contact' },
   ],
@@ -138,6 +139,29 @@ export const content = {
       { title: 'Développement Mobile', desc: 'Apps iOS & Android natives et cross-platform (Flutter, React Native).' },
       { title: 'Back-end & API', desc: 'Architectures serveur robustes, bases de données, intégrations tierces.' },
       { title: 'Conseil & Architecture', desc: 'Cadrage technique, choix de stack, revue de code et mise en production.' },
+    ],
+  },
+
+  /*
+    Avis clients verifies. La section grandit toute seule : ajouter un objet
+    dans `items` suffit. `pull` est la phrase mise en titre — on la choisit a
+    la main, ce n'est pas forcement dans le premier avis.
+    Un temoignage se cite dans sa langue d'origine : `lang` sert au navigateur
+    (cesure, synthese vocale), on ne traduit pas.
+  */
+  testimonials: {
+    kicker: 'Témoignages',
+    pull: 'Five stars are simply not enough.',
+    items: [
+      {
+        quote:
+          'Hermes is truly one of the top all-around professionals in the industry. His extensive full-stack experience shows in every interaction, and his commitment to honesty sets him apart. He consistently goes above and beyond to ensure his clients are fully satisfied in every circumstance. Five stars are simply not enough to describe how professional, reliable, and genuinely honest he is. Thank you, Hermes, for everything you do, your dedication speaks for itself.',
+        lang: 'en',
+        author: 'Gatien Georges',
+        meta: 'Client · Upwork · Août 2026',
+        rating: 5,
+        source: { label: 'Profil Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
+      },
     ],
   },
 

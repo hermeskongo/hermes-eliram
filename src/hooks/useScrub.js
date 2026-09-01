@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useScroll, useSpring, useTransform, useReducedMotion } from 'framer-motion'
 
 /*
@@ -42,4 +43,22 @@ export function useScrubLinear(progress, inputRange, outputRange, restValue) {
   const raw = useTransform(progress, inputRange, outputRange)
   const still = useTransform(progress, () => (restValue !== undefined ? restValue : 1))
   return reduced ? still : raw
+}
+
+/**
+ * Vrai quand la media query correspond. Sert a n'activer le scrub que la ou il
+ * a du sens : sur mobile, un hero plus haut que l'ecran rend toute derive
+ * parasite — on la coupe plutot que de la doser.
+ */
+export function useMedia(query) {
+  const get = () => (typeof window === 'undefined' ? false : window.matchMedia(query).matches)
+  const [on, setOn] = useState(get)
+  useEffect(() => {
+    const mq = window.matchMedia(query)
+    const onChange = () => setOn(mq.matches)
+    onChange()
+    mq.addEventListener('change', onChange)
+    return () => mq.removeEventListener('change', onChange)
+  }, [query])
+  return on
 }
