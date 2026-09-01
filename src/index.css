@@ -12,6 +12,9 @@
 
 html {
   scroll-behavior: smooth;
+  /* Le conteneur de defilement doit sortir du flux statique : c'est a partir
+     de lui que Framer Motion mesure la position des cibles de useScroll. */
+  position: relative;
 }
 
 html,
