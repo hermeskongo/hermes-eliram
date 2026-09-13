@@ -16,7 +16,7 @@ function mailtoFor(service, sel) {
   const chosen = service.options.filter((_, i) => sel.has(i))
   const total = totalFor(service, sel)
   const subject = `Projet ${service.title} — estimation ~${total} €`
-  const lines = chosen.map((o) => `- ${o.label} (+${o.price} €)`)
+  const lines = chosen.map((o) => (o.price === 0 ? `- ${o.label} (offert)` : `- ${o.label} (+${o.price} €)`))
   const body = [
     'Bonjour Hermes,',
     '',
@@ -58,7 +58,14 @@ function Estimator({ service, sel, onToggle }) {
                   +
                 </span>
                 <span className="flex-1 text-[0.95rem] font-normal leading-snug">{o.label}</span>
-                <span className={`font-mono text-xs tabular ${on ? 'text-paper/80' : 'text-muted'}`}>+{o.price} €</span>
+                {o.price === 0 ? (
+                  <span className="font-mono text-xs tabular">
+                    {o.was && <s className={`mr-1.5 ${on ? 'text-paper/50' : 'text-muted/60'}`}>{o.was} €</s>}
+                    <span className={on ? 'text-paper/90' : 'text-ink'}>offert</span>
+                  </span>
+                ) : (
+                  <span className={`font-mono text-xs tabular ${on ? 'text-paper/80' : 'text-muted'}`}>+{o.price} €</span>
+                )}
               </button>
             </li>
           )
