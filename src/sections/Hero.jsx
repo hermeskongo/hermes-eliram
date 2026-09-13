@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll } from 'framer-motion'
+import { motion, useReducedMotion, useScroll } from 'framer-motion'
 import { content } from '../content'
 import Character from '../components/Character'
 import { useScrub, useMedia } from '../hooks/useScrub'
@@ -10,6 +10,37 @@ const rise = (delay) => ({
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.7, delay, ease },
 })
+
+// Signature hero : le nom arrive lettre par lettre, léger voile qui se
+// dissipe — puis l'intro et les CTA suivent en fondu propre.
+const nameWrap = (delay) => ({
+  hidden: {},
+  show: { transition: { staggerChildren: 0.045, delayChildren: delay } },
+})
+const letter = {
+  hidden: { opacity: 0, y: '0.55em', filter: 'blur(6px)' },
+  show: { opacity: 1, y: '0em', filter: 'blur(0px)', transition: { duration: 0.7, ease } },
+}
+
+function Name({ text, delay }) {
+  const reduce = useReducedMotion()
+  if (reduce) return <span className="block">{text}</span>
+  return (
+    <motion.span
+      className="block overflow-hidden pb-2"
+      variants={nameWrap(delay)}
+      initial="hidden"
+      animate="show"
+      aria-label={text}
+    >
+      {text.split('').map((c, i) => (
+        <motion.span key={i} variants={letter} className="inline-block will-change-transform" aria-hidden="true">
+          {c}
+        </motion.span>
+      ))}
+    </motion.span>
+  )
+}
 
 export default function Hero() {
   const { identity } = content
@@ -38,18 +69,16 @@ export default function Hero() {
       {/* Left — identity */}
       <motion.div style={{ y: wide ? textY : 0 }} className="order-2 lg:order-1">
         <motion.p
-          {...rise(0.55)}
+          {...rise(1.95)}
           className="mb-6 font-mono text-sm uppercase tracking-[0.22em] text-muted"
         >
           <span aria-hidden="true" className="text-faint">//</span> {identity.role}
         </motion.p>
 
         <h1 className="font-display text-[clamp(3.2rem,10vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.035em] text-ink">
-          <motion.span className="block" {...rise(0.62)}>
-            {line1}
-          </motion.span>
-          <motion.span className="relative block" {...rise(0.72)}>
-            {line2}
+          <Name text={line1} delay={2.0} />
+          <span className="relative block">
+            <Name text={line2} delay={2.2} />
             <motion.svg
               aria-hidden="true"
               viewBox="0 0 300 20"
@@ -57,7 +86,7 @@ export default function Hero() {
               className="absolute -bottom-2 left-1 h-4 w-[62%] text-ink"
               initial={{ opacity: 0, pathLength: 0 }}
               animate={{ opacity: 1, pathLength: 1 }}
-              transition={{ duration: 0.9, delay: 1.15, ease }}
+              transition={{ duration: 0.9, delay: 2.9, ease }}
             >
               <motion.path
                 d="M4 12 C 70 4, 150 4, 214 10 C 250 13, 275 12, 296 7"
@@ -67,17 +96,17 @@ export default function Hero() {
                 strokeLinecap="round"
               />
             </motion.svg>
-          </motion.span>
+          </span>
         </h1>
 
         <motion.p
-          {...rise(0.9)}
+          {...rise(2.7)}
           className="mt-9 max-w-md text-pretty text-lg font-light leading-relaxed text-graphite sm:text-xl"
         >
           {identity.intro}
         </motion.p>
 
-        <motion.div {...rise(1.02)} className="mt-9 flex flex-wrap items-center gap-4">
+        <motion.div {...rise(2.85)} className="mt-9 flex flex-wrap items-center gap-4">
           <a
             href="#work"
             className="group inline-flex min-h-[48px] items-center gap-3 rounded-full bg-ink px-6 font-mono text-sm uppercase tracking-[0.1em] text-paper transition-transform duration-150 active:scale-[0.97]"
