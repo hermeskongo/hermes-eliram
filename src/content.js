@@ -8,7 +8,7 @@ export const content = {
     display: 'Hermes\nEliram', // hero name, \n = line break
     role: 'Fullstack Engineer',
     intro:
-      "Je conçois et développe des produits web & mobile de bout en bout — du premier écran à l'API en production.",
+      'Ingénieur logiciel. Je conçois et livre des produits complets, du premier écran à la production.',
     email: 'hermeskongo@gmail.com',
     status: 'Disponible',
     socials: [
@@ -27,14 +27,13 @@ export const content = {
   ],
 
   about: {
-    lead: 'Ingénieur logiciel full-stack — web & mobile, de bout en bout.',
+    lead: 'Neuf ou déjà en route, je livre un produit qui tient en production.',
     paragraphs: [
-      "Depuis plusieurs années, je construis des applications complètes : interfaces soignées, back-ends solides, et tout ce qu'il y a entre les deux.",
-      "J'aime le travail bien fait — un code lisible, des produits rapides, des détails qui tiennent la route. De l'idée à la mise en production, je m'occupe de la chaîne entière.",
+      "Depuis plusieurs années, je construis des applications complètes : interfaces soignées, back-ends solides, et tout ce qu'il y a entre les deux — web, mobile, API et infrastructure.",
+      "Je reprends aussi l'existant : terminer un projet en cours, corriger des bugs, stabiliser, améliorer un segment puis mettre en production. J'aime le travail bien fait — un code lisible, des produits rapides, des détails qui tiennent la route.",
     ],
     metrics: [
       { value: 4, prefix: '+', label: 'services' },
-      { value: 17, prefix: '+', label: 'projets menés à bien' },
     ],
   },
 
@@ -66,7 +65,7 @@ export const content = {
   },
 
   work: {
-    lead: 'Une sélection parmi 17 projets menés à bien.',
+    lead: 'Une sélection de projets.',
     projects: [
       {
         name: 'Apicore',
@@ -133,12 +132,55 @@ export const content = {
   },
 
   services: {
-    lead: 'Ce que je peux faire pour vous.',
+    lead: 'Composez votre estimation — prix de départ bas, total en direct.',
+    note: 'Estimation indicative. Devis ferme après diagnostic 30 min. Acompte 50 %.',
     items: [
-      { title: 'Développement Web', desc: "Applications web complètes et performantes, du front-end à l'API." },
-      { title: 'Développement Mobile', desc: 'Apps iOS & Android natives et cross-platform (Flutter, React Native).' },
-      { title: 'Back-end & API', desc: 'Architectures serveur robustes, bases de données, intégrations tierces.' },
-      { title: 'Conseil & Architecture', desc: 'Cadrage technique, choix de stack, revue de code et mise en production.' },
+      {
+        title: 'Site & application web',
+        desc: 'Vitrine rapide, puis on ajoute par segment.',
+        base: 97,
+        options: [
+          { label: 'Page supplémentaire', price: 30 },
+          { label: 'Blog / CMS', price: 120 },
+          { label: 'Espace client / auth', price: 180 },
+          { label: 'Catalogue + panier', price: 250 },
+          { label: 'Paiement en ligne', price: 180 },
+        ],
+      },
+      {
+        title: 'Application mobile',
+        desc: 'iOS + Android, 2–3 écrans pour démarrer.',
+        base: 290,
+        options: [
+          { label: 'Fonctionnement hors-ligne', price: 150 },
+          { label: 'Notifications push', price: 90 },
+          { label: 'Back-end dédié', price: 180 },
+          { label: 'Publication store', price: 120 },
+          { label: 'Mobile money (option)', price: 150 },
+        ],
+      },
+      {
+        title: 'Back-end & API',
+        desc: 'Une ressource + CRUD + PostgreSQL pour démarrer.',
+        base: 149,
+        options: [
+          { label: 'Auth / rôles', price: 120 },
+          { label: 'Webhooks & filets', price: 90 },
+          { label: 'Intégration tierce', price: 120 },
+          { label: 'Docs + tests', price: 80 },
+        ],
+      },
+      {
+        title: 'Mise en production & infra',
+        desc: 'Déploiement + HTTPS pour démarrer.',
+        base: 79,
+        options: [
+          { label: 'Domaine / DNS', price: 60 },
+          { label: 'CI / CD', price: 90 },
+          { label: 'Backups', price: 70 },
+          { label: 'Mails qui arrivent', price: 120 },
+        ],
+      },
     ],
   },
 

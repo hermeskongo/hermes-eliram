@@ -151,7 +151,7 @@ export default function Projects() {
     <Section id="work" kicker="Projets" lead={work.lead} accent="#ffa657">
       <div className="grid grid-cols-1 gap-x-10 gap-y-14 sm:grid-cols-2">
         {work.projects.map((p, i) => (
-          <Reveal key={i} delay={(i % 2) * 0.08}>
+          <Reveal soft key={i} delay={(i % 2) * 0.08}>
             <Card p={p} />
           </Reveal>
         ))}

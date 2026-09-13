@@ -81,11 +81,11 @@ export default function Expertise() {
   return (
     <Section id="expertise" kicker="Expertise" lead={expertise.lead} accent="#79c0ff">
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.4fr_0.6fr]">
-        <Reveal>
+        <Reveal soft>
           <CodeWindow filename={expertise.filename} badge="TypeScript" lines={lines} />
         </Reveal>
 
-        <Reveal delay={0.1}>
+        <Reveal soft delay={0.1}>
           <div className="flex flex-col gap-7">
             {g.map((grp) => (
               <div key={grp.key}>
@@ -106,7 +106,7 @@ export default function Expertise() {
       </div>
 
       {/* logo strip */}
-      <Reveal delay={0.15}>
+      <Reveal soft delay={0.15}>
         <div className="mt-12 flex flex-wrap gap-2.5 border-t border-line pt-8">
           {expertise.logos.map((l) => (
             <Logo key={l.slug} item={l} />
