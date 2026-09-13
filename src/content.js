@@ -32,9 +32,6 @@ export const content = {
       "Depuis plusieurs années, je construis des applications complètes : interfaces soignées, back-ends solides, et tout ce qu'il y a entre les deux — web, mobile, API et infrastructure.",
       "Je reprends aussi l'existant : terminer un projet en cours, corriger des bugs, stabiliser, améliorer un segment puis mettre en production. J'aime le travail bien fait — un code lisible, des produits rapides, des détails qui tiennent la route.",
     ],
-    metrics: [
-      { value: 4, prefix: '+', label: 'services' },
-    ],
   },
 
   // Rendered inside a dark code-editor window (the signature panel).
@@ -132,8 +129,8 @@ export const content = {
   },
 
   services: {
-    lead: 'Composez votre estimation — prix de départ bas, total en direct.',
-    note: 'Estimation indicative. Devis ferme après diagnostic 30 min. Acompte 50 %.',
+    lead: 'Choisissez un service, ajoutez vos options, le total suit.',
+    note: 'Chaque service part d\u2019un prix de base. Estimation indicative — devis ferme après diagnostic 30 min. Acompte 50 %.',
     items: [
       {
         title: 'Site & application web',
@@ -171,14 +168,14 @@ export const content = {
         ],
       },
       {
-        title: 'Mise en production & infra',
-        desc: 'Déploiement + HTTPS pour démarrer.',
+        title: 'Mise en production & maintenance',
+        desc: 'Mise en ligne + HTTPS pour démarrer.',
         base: 79,
         options: [
-          { label: 'Domaine / DNS', price: 60 },
-          { label: 'CI / CD', price: 90 },
-          { label: 'Backups', price: 70 },
-          { label: 'Mails qui arrivent', price: 120 },
+          { label: 'Domaine / DNS', price: 40 },
+          { label: 'Sauvegardes auto', price: 50 },
+          { label: 'Mails qui arrivent', price: 90 },
+          { label: 'Suivi 30 jours', price: 0, was: 80 },
         ],
       },
     ],
