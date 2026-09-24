@@ -65,6 +65,21 @@ export const content = {
     lead: 'Une sélection de projets.',
     projects: [
       {
+        name: 'Elgo',
+        year: '2026',
+        category: 'Mobile · Plateforme',
+        badge: 'En production',
+        blurb:
+          "Plateforme de livraison multi-acteurs, conçue et développée de bout en bout : trois applications mobiles publiées sur l'App Store et Google Play — client, livreur, partenaire — deux back-offices web et une API centrale qui orchestre commandes, courses et paiements. Suivi des livraisons en temps réel, notifications push, files de tâches et commissions calculées à la course.",
+        tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO', 'Redis', 'Docker'],
+        links: [
+          { label: 'App Store', url: 'https://apps.apple.com/us/developer/elgo/id6790060298' },
+          { label: 'Google Play', url: 'https://play.google.com/store/apps/developer?id=Elgo' },
+        ],
+        url: 'https://apps.apple.com/us/developer/elgo/id6790060298',
+        image: '/projects/elgo-cover.webp',
+      },
+      {
         name: 'Apicore',
         year: '2026',
         category: 'E-commerce · Fullstack',
@@ -123,7 +138,7 @@ export const content = {
           "Station météo connectée, primée au concours Smart-Elec 2026 : température, humidité, pression et luminosité en temps réel, avec pilotage automatique et manuel d'un ventilateur. Arduino et capteurs, backend Python, dashboard web live.",
         tags: ['Arduino', 'Python', 'Flask-SocketIO', 'IoT'],
         url: 'https://github.com/hermeskongo/IoT_weather_project',
-        image: '',
+        image: '/projects/iot-cover.webp',
       },
     ],
   },
