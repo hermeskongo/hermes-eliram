@@ -4,6 +4,15 @@ import { content } from '../content'
 import Character from '../components/Character'
 import { useScrub, useMedia } from '../hooks/useScrub'
 
+/*
+  Le hero existe en deux versions. PORTRAIT = true : deux colonnes, le portrait
+  a droite (version d'origine). PORTRAIT = false : le texte seul, cale a gauche
+  sur une largeur identique a celle de l'ancienne colonne — l'interligne et le
+  trait sous le nom ne bougent donc pas — et une section moins haute, pour que
+  la premiere carte projet depasse sous la ligne de flottaison.
+*/
+const PORTRAIT = true
+
 const ease = [0.16, 1, 0.3, 1]
 const rise = (delay) => ({
   initial: { opacity: 0, y: 20 },
@@ -74,10 +83,17 @@ export default function Hero() {
     <section
       ref={ref}
       id="top"
-      className="grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-16 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12"
+      className={
+        PORTRAIT
+          ? 'grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-16 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12'
+          : 'flex min-h-[74dvh] flex-col justify-center pb-20 pt-28'
+      }
     >
       {/* Left — identity */}
-      <motion.div style={{ y: wide ? textY : 0 }} className="order-2 lg:order-1">
+      <motion.div
+        style={{ y: wide ? textY : 0 }}
+        className={PORTRAIT ? 'order-2 lg:order-1' : 'max-w-xl'}
+      >
         <motion.p
           {...(wide ? rise(1.95) : view(0))}
           className="mb-6 font-mono text-sm uppercase tracking-[0.22em] text-muted"
@@ -135,13 +151,15 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Right — illustrated character */}
-      <motion.div
-        style={{ y: wide ? charY : 0 }}
-        className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
-      >
-        <Character />
-      </motion.div>
+      {/* Right — le portrait */}
+      {PORTRAIT && (
+        <motion.div
+          style={{ y: wide ? charY : 0 }}
+          className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
+        >
+          <Character />
+        </motion.div>
+      )}
     </section>
   )
 }

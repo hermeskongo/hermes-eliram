@@ -1,7 +1,17 @@
 import { motion } from 'framer-motion'
 
-// The illustrated character — a drawn portrait framed as a rounded card.
-// It rises + reveals top-to-bottom on load, then gently idles.
+/*
+  Le portrait du hero. Deux versions vivent dans /public : la photo et
+  l'illustration d'origine. Pour rebasculer, changer la ligne PORTRAIT —
+  rien d'autre a toucher.
+*/
+const PORTRAITS = {
+  photo: { src: '/personal-brand.webp', w: 747, h: 1120, alt: 'Portrait de Hermes Eliram' },
+  dessin: { src: '/character.webp', w: 1024, h: 1536, alt: 'Illustration de Hermes' },
+}
+const PORTRAIT = PORTRAITS.dessin
+
+// Il monte et se devoile de haut en bas au chargement, puis flotte doucement.
 export default function Character({ className = '' }) {
   return (
     <div className={`relative ${className}`}>
@@ -18,8 +28,10 @@ export default function Character({ className = '' }) {
           transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
         >
           <img
-            src="/character.webp"
-            alt="Illustration de Hermes"
+            src={PORTRAIT.src}
+            alt={PORTRAIT.alt}
+            width={PORTRAIT.w}
+            height={PORTRAIT.h}
             className="block w-full"
           />
         </motion.div>
