@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useInView } from 'framer-motion'
 
 // Counts 0 → value once on reveal. tabular-nums keeps the layout from jittering.
-export default function Stat({ value, prefix = '', label }) {
+export default function Stat({ value, prefix = '', suffix = '', label }) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-30px' })
   const [n, setN] = useState(0)
@@ -28,12 +28,13 @@ export default function Stat({ value, prefix = '', label }) {
   }, [inView, value])
 
   return (
-    <div ref={ref} className="flex items-baseline gap-3">
-      <span className="font-display tabular text-5xl font-semibold leading-none text-ink sm:text-6xl">
+    <div ref={ref} className="border-t border-ink/15 pt-5">
+      <span className="font-display tabular block text-[clamp(4rem,9vw,7rem)] font-extrabold leading-[0.9] tracking-[-0.05em] text-ember">
         {prefix}
         {n}
+        {suffix}
       </span>
-      <span className="max-w-[9ch] text-sm font-light leading-tight text-muted">{label}</span>
+      <span className="mt-3 block max-w-[18ch] text-base font-light leading-snug text-graphite">{label}</span>
     </div>
   )
 }

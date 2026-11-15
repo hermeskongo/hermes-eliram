@@ -1,59 +1,42 @@
 import { useRef } from 'react'
 import { motion, useReducedMotion, useScroll } from 'framer-motion'
 import { content } from '../content'
-import Character from '../components/Character'
+import Orbit from '../components/Orbit'
+import Magnetic from '../motion/Magnetic'
+import RevealText from '../motion/RevealText'
+import { useIntroDone } from '../motion/intro'
 import { useScrub, useMedia } from '../hooks/useScrub'
 
-/*
-  Le hero existe en deux versions. PORTRAIT = true : deux colonnes, le portrait
-  a droite (version d'origine). PORTRAIT = false : le texte seul, cale a gauche
-  sur une largeur identique a celle de l'ancienne colonne — l'interligne et le
-  trait sous le nom ne bougent donc pas — et une section moins haute, pour que
-  la premiere carte projet depasse sous la ligne de flottaison.
-*/
-const PORTRAIT = true
-
 const ease = [0.16, 1, 0.3, 1]
-const rise = (delay) => ({
-  initial: { opacity: 0, y: 20 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.7, delay, ease },
-})
-// Variante mobile : le texte est sous l'image, donc l'entrée se joue à
-// l'apparition à l'écran plutôt qu'au chargement (déjà passé quand on scrolle).
-const view = (delay) => ({
-  initial: { opacity: 0, y: 20 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.6 },
-  transition: { duration: 0.7, delay, ease },
-})
 
-// Signature hero : le nom arrive lettre par lettre, léger voile qui se
-// dissipe — puis l'intro et les CTA suivent en fondu propre.
-const nameWrap = (delay) => ({
-  hidden: {},
-  show: { transition: { staggerChildren: 0.045, delayChildren: delay } },
-})
-const letter = {
-  hidden: { opacity: 0, y: '0.55em', filter: 'blur(6px)' },
-  show: { opacity: 1, y: '0em', filter: 'blur(0px)', transition: { duration: 0.7, ease } },
-}
-
-function Name({ text, delay, timed }) {
+/*
+  Premier ecran : a gauche, le nom en tres grand, qui s'ecrit lettre par lettre
+  a la fin de l'ouverture, puis la phrase (mots d'accent en italique orange),
+  puis les deux boutons. A droite, l'orbite : le portrait au centre, ses outils
+  qui gravitent autour. Au defilement, texte et orbite s'ecartent legerement
+  (profondeur), sur grand ecran seulement.
+*/
+function Name({ text, go, delay }) {
   const reduce = useReducedMotion()
   if (reduce) return <span className="block">{text}</span>
   return (
     <motion.span
-      className="block overflow-hidden pb-2"
-      variants={nameWrap(delay)}
-      initial="hidden"
-      {...(timed
-        ? { animate: 'show' }
-        : { whileInView: 'show', viewport: { once: true, amount: 0.6 } })}
+      className="block overflow-hidden pb-[0.06em]"
       aria-label={text}
+      initial="hidden"
+      animate={go ? 'show' : 'hidden'}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: delay } } }}
     >
       {text.split('').map((c, i) => (
-        <motion.span key={i} variants={letter} className="inline-block will-change-transform" aria-hidden="true">
+        <motion.span
+          key={i}
+          aria-hidden="true"
+          className="inline-block will-change-transform"
+          variants={{
+            hidden: { y: '110%', rotate: 8 },
+            show: { y: '0%', rotate: 0, transition: { duration: 1, ease } },
+          }}
+        >
           {c}
         </motion.span>
       ))}
@@ -61,105 +44,81 @@ function Name({ text, delay, timed }) {
   )
 }
 
+const fade = (go, delay) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: go ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 },
+  transition: { duration: 0.9, delay, ease },
+})
+
 export default function Hero() {
   const { identity } = content
   const [line1, line2] = identity.display.split('\n')
+  const go = useIntroDone()
+  const wide = useMedia('(min-width: 1024px)')
 
   const ref = useRef(null)
-  /*
-    Le hero ne s'efface plus au defilement : l'ancienne version tombait a zero
-    alors qu'un quart de la section etait encore a l'ecran — pire sur mobile,
-    ou le hero depasse la hauteur de l'ecran et disparaissait avant d'avoir ete
-    lu. Il reste donc entierement opaque ; seule une legere derive verticale
-    distingue le texte de l'illustration, et uniquement sur grand ecran, la ou
-    la section tient exactement dans la fenetre.
-  */
-  const wide = useMedia('(min-width: 1024px)')
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
-  const textY = useScrub(scrollYProgress, [0, 1], [0, -56], 0)
-  const charY = useScrub(scrollYProgress, [0, 1], [0, -18], 0)
+  const textY = useScrub(scrollYProgress, [0, 1], [0, -90], 0)
+  const deckY = useScrub(scrollYProgress, [0, 1], [0, 60], 0)
+  const deckR = useScrub(scrollYProgress, [0, 1], [0, -4], 0)
 
   return (
     <section
       ref={ref}
       id="top"
-      className={
-        PORTRAIT
-          ? 'grid min-h-[100dvh] grid-cols-1 items-center gap-10 pb-16 pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12'
-          : 'flex min-h-[74dvh] flex-col justify-center pb-20 pt-28'
-      }
+      className="relative mx-auto grid min-h-[100dvh] max-w-[1240px] grid-cols-1 items-center gap-14 px-6 pb-20 pt-28 sm:px-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10"
     >
-      {/* Left — identity */}
-      <motion.div
-        style={{ y: wide ? textY : 0 }}
-        className={PORTRAIT ? 'order-2 lg:order-1' : 'max-w-xl'}
-      >
-        <motion.p
-          {...(wide ? rise(1.95) : view(0))}
-          className="mb-6 font-mono text-sm uppercase tracking-[0.22em] text-muted"
-        >
-          <span aria-hidden="true" className="text-faint">//</span> {identity.role}
+      <motion.div style={{ y: wide ? textY : 0 }}>
+        <motion.p {...fade(go, 0)} className="mb-6 flex items-center gap-3 font-mono text-sm uppercase tracking-[0.22em] text-muted">
+          <span className="h-px w-8 bg-ember" aria-hidden="true" />
+          {identity.role}
         </motion.p>
 
-        <h1 className="font-display text-[clamp(3.2rem,10vw,7rem)] font-extrabold leading-[0.92] tracking-[-0.035em] text-ink">
-          <Name text={line1} delay={wide ? 2.0 : 0.1} timed={wide} />
-          <span className="relative block">
-            <Name text={line2} delay={wide ? 2.2 : 0.3} timed={wide} />
-            <motion.svg
-              aria-hidden="true"
-              viewBox="0 0 300 20"
-              preserveAspectRatio="none"
-              className="absolute -bottom-2 left-1 h-4 w-[62%] text-ink"
-              initial={{ opacity: 0, pathLength: 0 }}
-              {...(wide
-                ? { animate: { opacity: 1, pathLength: 1 } }
-                : { whileInView: { opacity: 1, pathLength: 1 }, viewport: { once: true, amount: 0.6 } })}
-              transition={{ duration: 0.9, delay: wide ? 2.9 : 0.7, ease }}
-            >
-              <motion.path
-                d="M4 12 C 70 4, 150 4, 214 10 C 250 13, 275 12, 296 7"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="4"
-                strokeLinecap="round"
-              />
-            </motion.svg>
-          </span>
+        <h1 className="font-display text-[clamp(3.4rem,11vw,8.2rem)] font-extrabold leading-[0.88] tracking-[-0.045em] text-ink">
+          <Name text={line1} go={go} delay={0.05} />
+          <Name text={line2} go={go} delay={0.25} />
         </h1>
 
-        <motion.p
-          {...(wide ? rise(2.7) : view(0.35))}
-          className="mt-9 max-w-md text-pretty text-lg font-light leading-relaxed text-graphite sm:text-xl"
-        >
-          {identity.intro}
-        </motion.p>
+        <div className="mt-8 max-w-xl">
+          {go && (
+            <RevealText
+              as="p"
+              animateOnLoad
+              delay={0.55}
+              stagger={0.03}
+              text={identity.tagline}
+              className="font-display text-[clamp(1.35rem,2.4vw,1.9rem)] font-medium leading-snug tracking-[-0.015em] text-graphite"
+            />
+          )}
+        </div>
 
-        <motion.div {...(wide ? rise(2.85) : view(0.5))} className="mt-9 flex flex-wrap items-center gap-4">
-          <a
-            href="#work"
-            className="group inline-flex min-h-[48px] items-center gap-3 rounded-full bg-ink px-6 font-mono text-sm uppercase tracking-[0.1em] text-paper transition-transform duration-150 active:scale-[0.97]"
-          >
-            Voir les projets
-            <span className="transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
-          </a>
-          <a
-            href={`mailto:${identity.email}`}
-            className="inline-flex min-h-[48px] items-center font-mono text-sm tracking-tight text-muted underline decoration-line underline-offset-4 transition-colors duration-200 hover:text-ink hover:decoration-ink"
-          >
-            {identity.email}
-          </a>
+        <motion.div {...fade(go, 0.9)} className="mt-10 flex flex-wrap items-center gap-4">
+          <Magnetic>
+            <a
+              href="#work"
+              className="group inline-flex min-h-[52px] items-center gap-3 rounded-full bg-ink px-7 font-mono text-sm uppercase tracking-[0.1em] text-paper transition-colors duration-300 hover:bg-cocoa"
+            >
+              Voir les projets
+              <span className="transition-transform duration-300 ease-out group-hover:translate-x-1">→</span>
+            </a>
+          </Magnetic>
+          <Magnetic>
+            <a
+              href="#contact"
+              className="group inline-flex min-h-[52px] items-center gap-3 rounded-full bg-ember pl-6 pr-2 font-mono text-sm uppercase tracking-[0.1em] text-paper transition-colors duration-300 hover:bg-ember2"
+            >
+              Démarrer un projet
+              <span className="grid h-9 w-9 place-items-center rounded-full bg-paper text-ember transition-transform duration-300 group-hover:rotate-45">
+                ↗
+              </span>
+            </a>
+          </Magnetic>
         </motion.div>
       </motion.div>
 
-      {/* Right — le portrait */}
-      {PORTRAIT && (
-        <motion.div
-          style={{ y: wide ? charY : 0 }}
-          className="order-1 mx-auto w-full max-w-[440px] lg:order-2"
-        >
-          <Character />
-        </motion.div>
-      )}
+      <motion.div style={{ y: wide ? deckY : 0, rotate: wide ? deckR : 0 }} className="w-full">
+        <Orbit go={go} portrait={{ src: '/character.webp', alt: 'Illustration de Hermes' }} />
+      </motion.div>
     </section>
   )
 }

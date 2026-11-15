@@ -2,6 +2,8 @@ import { forwardRef, useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import { content } from '../content'
 import { useMedia } from '../hooks/useScrub'
+import { useLenis } from '../motion/SmoothScroll'
+import Magnetic from '../motion/Magnetic'
 
 const ease = [0.16, 1, 0.3, 1]
 
@@ -142,6 +144,7 @@ export default function Header() {
   const [open, setOpen] = useState(false)
   const burgerRef = useRef(null)
   const wide = useMedia('(min-width: 768px)')
+  const lenis = useLenis()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -184,11 +187,13 @@ export default function Header() {
     if (!open) return
     const previous = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    lenis?.stop()
     return () => {
       document.body.style.overflow = previous
+      lenis?.start()
       burgerRef.current?.focus()
     }
-  }, [open])
+  }, [open, lenis])
 
   useEffect(() => {
     if (wide) setOpen(false)
@@ -208,7 +213,7 @@ export default function Header() {
             className="-my-2 inline-flex min-h-[44px] items-center py-2 font-mono text-lg font-bold tracking-tight text-ink"
             aria-label="Haut de page"
           >
-            HK<span aria-hidden="true" className="text-faint">_</span>
+            HK<span aria-hidden="true" className="text-ember">_</span>
           </a>
 
           <nav className="hidden items-center gap-8 md:flex" aria-label="Sections">
@@ -226,7 +231,7 @@ export default function Header() {
                   {n.label}
                   <span
                     aria-hidden="true"
-                    className={`absolute bottom-2 left-0 h-px bg-ink transition-all duration-300 ease-out ${
+                    className={`absolute bottom-2 left-0 h-px bg-ember transition-all duration-300 ease-out ${
                       on ? 'w-full opacity-100' : 'w-0 opacity-0'
                     }`}
                   />
@@ -245,6 +250,14 @@ export default function Header() {
                 {identity.status}
               </span>
             </span>
+            <Magnetic className="hidden lg:inline-block">
+              <a
+                href="#contact"
+                className="inline-flex min-h-[40px] items-center gap-2 rounded-full bg-ink px-4 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper transition-colors duration-300 hover:bg-ember"
+              >
+                Démarrer un projet <span aria-hidden="true">↗</span>
+              </a>
+            </Magnetic>
             <Burger ref={burgerRef} open={open} onClick={() => setOpen((v) => !v)} />
           </div>
         </div>
