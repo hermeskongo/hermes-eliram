@@ -9,6 +9,14 @@ export const content = {
     role: 'Fullstack Engineer',
     intro:
       'Ingénieur logiciel. Je conçois et livre des produits complets, du premier écran à la production.',
+    // Phrase du hero. Les mots entre *asterisques* passent en italique orange.
+    tagline: 'Je conçois des produits *complets*, du premier écran à la *production*.',
+    // Repères de la section À propos : seulement des faits verifiables dans les projets ci-dessous.
+    stats: [
+      { value: 6, label: 'projets livrés' },
+      { value: 3, label: 'apps publiées sur les stores' },
+      { value: 2, suffix: 'ᵉ', label: 'place au concours Smart-Elec 2026' },
+    ],
     email: 'hermeskongo@gmail.com',
     status: 'Disponible',
     socials: [
@@ -27,7 +35,7 @@ export const content = {
   ],
 
   about: {
-    lead: 'Neuf ou déjà en route, je livre un produit qui tient en production.',
+    lead: 'Neuf ou déjà en route, je livre un produit qui *tient* en production.',
     paragraphs: [
       "Depuis plusieurs années, je construis des applications complètes : interfaces soignées, back-ends solides, et tout ce qu'il y a entre les deux — web, mobile, API et infrastructure.",
       "Je reprends aussi l'existant : terminer un projet en cours, corriger des bugs, stabiliser, améliorer un segment puis mettre en production. J'aime le travail bien fait — un code lisible, des produits rapides, des détails qui tiennent la route.",
@@ -36,7 +44,7 @@ export const content = {
 
   // Rendered inside a dark code-editor window (the signature panel).
   expertise: {
-    lead: 'Ce que je maîtrise, présenté comme je le vis : dans le code.',
+    lead: 'Ce que je maîtrise, présenté comme je le vis : dans le *code*.',
     filename: 'expertise.ts',
     groups: [
       { key: 'frontend', label: 'Front-end', items: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion'] },
@@ -62,7 +70,7 @@ export const content = {
   },
 
   work: {
-    lead: 'Une sélection de projets.',
+    lead: 'Une sélection de *projets*.',
     projects: [
       {
         name: 'Elgo',
@@ -85,7 +93,7 @@ export const content = {
         category: 'E-commerce · Fullstack',
         badge: 'Démo en ligne',
         blurb:
-          "Boutique e-commerce complète de matériel apicole pour l'Afrique de l'Ouest : catalogue de 500+ produits filtré par catégorie, panier, checkout et suivi de commande. Le tout doublé d'un back-office admin complet — gestion des produits, commandes en temps réel et analytics (chiffre d'affaires, panier moyen, top produits). Next.js, PostgreSQL/Prisma et authentification NextAuth.",
+          "Boutique e-commerce complète de matériel apicole pour l'Afrique de l'Ouest : catalogue filtré par catégorie, panier, checkout et suivi de commande. Le tout doublé d'un back-office admin complet — gestion des produits, commandes en temps réel et analytics (chiffre d'affaires, panier moyen, top produits). Next.js, PostgreSQL/Prisma et authentification NextAuth.",
         tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth'],
         links: [{ label: 'Voir le site', url: 'https://apicore-eta.vercel.app/' }],
         url: 'https://apicore-eta.vercel.app/',
@@ -143,55 +151,26 @@ export const content = {
     ],
   },
 
+  // Services : volontairement simple, sans prix ni options. Chaque ligne ouvre
+  // un e-mail deja titre avec le service choisi.
   services: {
-    lead: 'Choisissez un service, ajoutez vos options, le total suit.',
-    note: 'Chaque service part d\u2019un prix de base. Estimation indicative — devis ferme après diagnostic 30 min. Acompte 50 %.',
+    lead: 'Ce que je *construis* pour vous.',
     items: [
       {
-        title: 'Site & application web',
-        desc: 'Vitrine rapide, puis on ajoute par segment.',
-        base: 97,
-        options: [
-          { label: 'Page supplémentaire', price: 30 },
-          { label: 'Blog / CMS', price: 120 },
-          { label: 'Espace client / auth', price: 180 },
-          { label: 'Catalogue + panier', price: 250 },
-          { label: 'Paiement en ligne', price: 180 },
-        ],
+        title: 'Site vitrine',
+        desc: 'Un site rapide et soigné qui présente votre activité et transforme les visiteurs en contacts.',
+      },
+      {
+        title: 'SaaS',
+        desc: 'Une application web complète : comptes, abonnements, tableau de bord et back-end solide.',
+      },
+      {
+        title: 'Application e-commerce',
+        desc: 'Catalogue, panier, commandes et paiement en ligne, avec un back-office pour tout gérer.',
       },
       {
         title: 'Application mobile',
-        desc: 'iOS + Android, 2–3 écrans pour démarrer.',
-        base: 290,
-        options: [
-          { label: 'Fonctionnement hors-ligne', price: 150 },
-          { label: 'Notifications push', price: 90 },
-          { label: 'Back-end dédié', price: 180 },
-          { label: 'Publication store', price: 120 },
-          { label: 'Mobile money (option)', price: 150 },
-        ],
-      },
-      {
-        title: 'Back-end & API',
-        desc: 'Une ressource + CRUD + PostgreSQL pour démarrer.',
-        base: 149,
-        options: [
-          { label: 'Auth / rôles', price: 120 },
-          { label: 'Webhooks & filets', price: 90 },
-          { label: 'Intégration tierce', price: 120 },
-          { label: 'Docs + tests', price: 80 },
-        ],
-      },
-      {
-        title: 'Mise en production & maintenance',
-        desc: 'Mise en ligne + HTTPS pour démarrer.',
-        base: 79,
-        options: [
-          { label: 'Domaine / DNS', price: 40 },
-          { label: 'Sauvegardes auto', price: 50 },
-          { label: 'Mails qui arrivent', price: 90 },
-          { label: 'Suivi 30 jours', price: 0, was: 80 },
-        ],
+        desc: 'iOS et Android, de la maquette à la publication sur les stores.',
       },
     ],
   },
@@ -220,7 +199,7 @@ export const content = {
   },
 
   contact: {
-    lead: 'Un projet en tête ?',
+    lead: 'Un projet en *tête* ?',
     body: 'Écrivez-moi — je réponds vite.',
   },
 }

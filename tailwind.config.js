@@ -25,11 +25,21 @@ export default {
           fn: '#79c0ff',
         },
         good: '#3fb950',
+        // Accent chaud : orange brûlé et brun cacao, pensés pour le papier clair.
+        ember: '#C2410C',    // 5.0:1 sur le papier : texte d'accent et boutons
+        ember2: '#9A3412',   // survol, ombres
+        clay: '#F08A4B',     // orange clair, lisible sur le brun
+        cocoa: '#24150D',    // sections sombres
+        cocoa2: '#3A2417',
+        sand: '#EDE3D3',     // texte sur le brun
+        olive: '#2E3826',    // fond des temoignages (vert sous-bois, s'accorde au brun et a l'orange)
+        dune: '#E7D8C0',     // fond sable des services
       },
       fontFamily: {
         display: ['"Bricolage Grotesque"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         sans: ['Geist', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        serif: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
       },
     },
   },

@@ -1,5 +1,10 @@
 /*
-  DIRECTION CONTRACT — "STUDIO / EDITOR"
+  MISE A JOUR 15/11/2026 — « MOTION » : palette chaude ajoutee (orange brule
+  #C2410C, brun cacao #24150D) sur le papier, defilement doux (Lenis), ouverture
+  a rideaux, curseur maison, paquet de projets dans le hero, projets devoiles au
+  defilement et ouverts en grand, bloc contact orange, pied de page brun.
+
+  DIRECTION CONTRACT (d'origine) — "STUDIO / EDITOR"
   THESIS: a warm, black-&-white illustrated editorial portfolio whose only real
     color comes from embedded dark code-editor panels. Fuses F (light, illustrated,
     character-led) with B (project grid + code-editor expertise). Refuses the old
@@ -26,11 +31,14 @@ import Projects from './sections/Projects'
 import Testimonials from './sections/Testimonials'
 import Services from './sections/Services'
 import Contact from './sections/Contact'
+import SmoothScroll from './motion/SmoothScroll'
+import Cursor from './motion/Cursor'
 
 export default function App() {
   return (
-    <>
+    <SmoothScroll>
       <Loader />
+      <Cursor />
       <ScrollProgress />
       {/* Le premier arret au clavier saute la navigation. */}
       <a
@@ -41,7 +49,8 @@ export default function App() {
       </a>
       <div className="tex-paper pointer-events-none fixed inset-0 z-0" aria-hidden="true" />
       <Header />
-      <main className="relative z-10 mx-auto max-w-[1240px] px-6 sm:px-10">
+      {/* Chaque section porte sa propre largeur : certaines vont d'un bord a l'autre. */}
+      <main className="relative">
         <Hero />
         <About />
         <Expertise />
@@ -49,8 +58,8 @@ export default function App() {
         <Testimonials />
         <Services />
         <Contact />
-        <Footer />
       </main>
-    </>
+      <Footer />
+    </SmoothScroll>
   )
 }

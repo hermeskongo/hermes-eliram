@@ -1,215 +1,124 @@
-import { useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { content } from '../content'
 import Section from '../components/Section'
-import Reveal from '../components/Reveal'
-import ServiceIcon from '../components/ServiceIcon'
 
 const ease = [0.16, 1, 0.3, 1]
-const email = content.identity.email
 
-function totalFor(service, sel) {
-  return service.base + service.options.reduce((sum, o, i) => (sel.has(i) ? sum + o.price : sum), 0)
+/*
+  Les services, en quatre carres (2 × 2) sur fond sable. Chaque carre porte une
+  icone dessinee au trait pour son service. Au survol, un aplat orange monte du
+  bas, l'icone grossit legerement et la fleche tourne ; tout revient en place
+  quand la souris s'en va. Chaque carre ouvre un e-mail deja titre avec le
+  service choisi. Sur telephone, les carres s'empilent sur une colonne.
+*/
+const stroke = {
+  fill: 'none',
+  stroke: 'currentColor',
+  strokeWidth: 1.6,
+  strokeLinecap: 'round',
+  strokeLinejoin: 'round',
 }
 
-function mailtoFor(service, sel) {
-  const chosen = service.options.filter((_, i) => sel.has(i))
-  const total = totalFor(service, sel)
-  const subject = `Projet ${service.title} — estimation ~${total} €`
-  const lines = chosen.map((o) => (o.price === 0 ? `- ${o.label} (offert)` : `- ${o.label} (+${o.price} €)`))
-  const body = [
-    'Bonjour Hermes,',
-    '',
-    `Service : ${service.title} (base ${service.base} €)`,
-    ...lines,
-    `Total indicatif : ~${total} €`,
-    '',
-    'Mon besoin : ',
-  ].join('\n')
-  return `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
-}
-
-function Estimator({ service, sel, onToggle }) {
-  const total = totalFor(service, sel)
-  return (
-    <div>
-      {/* Options — lignes tactiles, pas de checkbox */}
-      <ul className="mt-6 flex flex-col gap-2">
-        {service.options.map((o, i) => {
-          const on = sel.has(i)
-          return (
-            <li key={o.label}>
-              <button
-                type="button"
-                aria-pressed={on}
-                onClick={() => onToggle(i)}
-                className={`group flex w-full items-center gap-3 rounded-xl px-3.5 py-2.5 text-left ring-1 transition-all duration-300 active:scale-[0.99] ${
-                  on
-                    ? 'bg-ink text-paper ring-ink shadow-[0_10px_24px_-12px_rgba(23,21,15,0.65)]'
-                    : 'bg-paper/70 ring-line hover:translate-x-[2px] hover:ring-ink/40'
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className={`grid h-6 w-6 shrink-0 place-items-center rounded-full text-base leading-none ring-1 transition-all duration-300 ${
-                    on ? 'rotate-45 ring-paper/40' : 'ring-line text-muted group-hover:ring-ink/40 group-hover:text-ink'
-                  }`}
-                >
-                  +
-                </span>
-                <span className="flex-1 text-[0.95rem] font-normal leading-snug">{o.label}</span>
-                {o.price === 0 ? (
-                  <span className="font-mono text-xs tabular">
-                    {o.was && <s className={`mr-1.5 ${on ? 'text-paper/50' : 'text-muted/60'}`}>{o.was} €</s>}
-                    <span className={on ? 'text-paper/90' : 'text-ink'}>offert</span>
-                  </span>
-                ) : (
-                  <span className={`font-mono text-xs tabular ${on ? 'text-paper/80' : 'text-muted'}`}>+{o.price} €</span>
-                )}
-              </button>
-            </li>
-          )
-        })}
-      </ul>
-
-      {/* Total + CTA */}
-      <div className="mt-6 flex items-end justify-between gap-4 border-t border-line pt-5">
-        <div>
-          <p className="font-mono text-[0.68rem] uppercase tracking-[0.2em] text-muted">Estimation</p>
-          <AnimatePresence mode="popLayout" initial={false}>
-            <motion.p
-              key={total}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3, ease }}
-              className="font-display tabular text-3xl font-semibold text-ink"
-            >
-              ≈ {total} €
-            </motion.p>
-          </AnimatePresence>
-        </div>
-        <a
-          href={mailtoFor(service, sel)}
-          className="inline-flex min-h-[44px] shrink-0 items-center gap-2 rounded-full bg-ink px-5 font-mono text-xs uppercase tracking-[0.1em] text-paper transition-transform duration-150 active:scale-[0.97]"
-        >
-          Écrivez-moi <span aria-hidden="true">→</span>
-        </a>
-      </div>
-    </div>
-  )
-}
+// Une icone par service, dans l'ordre du contenu.
+const ICONS = [
+  // Site vitrine : une fenetre de navigateur avec un titre et une image
+  <svg key="vitrine" viewBox="0 0 64 64" {...stroke}>
+    <rect x="6" y="10" width="52" height="44" rx="5" />
+    <path d="M6 20h52" />
+    <circle cx="12" cy="15" r="1.2" />
+    <circle cx="17" cy="15" r="1.2" />
+    <circle cx="22" cy="15" r="1.2" />
+    <path d="M14 30h16M14 36h11" />
+    <rect x="36" y="27" width="15" height="13" rx="2" />
+    <path d="M36 37l4-4 4 3 3-2 4 3" />
+    <rect x="14" y="43" width="12" height="5" rx="2.5" />
+  </svg>,
+  // SaaS : un tableau de bord, une courbe et des barres
+  <svg key="saas" viewBox="0 0 64 64" {...stroke}>
+    <rect x="6" y="10" width="52" height="44" rx="5" />
+    <path d="M18 10v44" />
+    <path d="M10 18h4M10 24h4M10 30h4" />
+    <path d="M24 34l7-7 6 5 9-11 6 4" />
+    <path d="M26 48v-5M33 48v-9M40 48v-6M47 48v-11" />
+  </svg>,
+  // Application e-commerce : un sac de courses et une etiquette de prix
+  <svg key="ecom" viewBox="0 0 64 64" {...stroke}>
+    <path d="M14 22h32l-3 32H17z" />
+    <path d="M23 22v-4a7 7 0 0 1 14 0v4" />
+    <path d="M23 29a7 7 0 0 0 14 0" />
+    <path d="M44 34l10-10h6v6L50 40z" />
+    <circle cx="56" cy="28" r="1.2" />
+  </svg>,
+  // Application mobile : un telephone, des cartes et une notification
+  <svg key="mobile" viewBox="0 0 64 64" {...stroke}>
+    <rect x="18" y="6" width="28" height="52" rx="6" />
+    <path d="M28 11h8" />
+    <rect x="23" y="18" width="18" height="10" rx="2" />
+    <path d="M23 34h18M23 40h12" />
+    <circle cx="32" cy="51" r="2" />
+    <circle cx="48" cy="12" r="5" />
+    <path d="M48 10v2.5" />
+  </svg>,
+]
 
 export default function Services() {
-  const { services } = content
-  const [active, setActive] = useState(0)
-  const [picked, setPicked] = useState({})
-  const current = services.items[active]
-  const selFor = (idx) => picked[idx] || new Set()
-
-  const toggle = (sIdx, oIdx) => {
-    setPicked((prev) => {
-      const next = new Set(prev[sIdx] || [])
-      if (next.has(oIdx)) next.delete(oIdx)
-      else next.add(oIdx)
-      return { ...prev, [sIdx]: next }
-    })
-  }
+  const { services, identity } = content
+  const mail = (title) =>
+    `mailto:${identity.email}?subject=${encodeURIComponent(`Projet : ${title}`)}&body=${encodeURIComponent(
+      `Bonjour Hermes,\n\nJe souhaite un projet de type « ${title} ».\n\nMon besoin : `
+    )}`
 
   return (
-    <Section id="services" kicker="Services" lead={services.lead} accent="#ff7b72">
-      <p className="mb-10 max-w-xl font-mono text-xs leading-relaxed text-muted">{services.note}</p>
-
-      {/* Desktop: liste ←→ carte estimateur */}
-      <div className="hidden gap-10 lg:grid lg:grid-cols-[0.9fr_1.1fr]">
-        <Reveal>
-          <ul className="dimlist">
-            {services.items.map((s, i) => (
-              <li key={s.title}>
-                <button
-                  type="button"
-                  onMouseEnter={() => setActive(i)}
-                  onFocus={() => setActive(i)}
-                  onClick={() => setActive(i)}
-                  aria-pressed={active === i}
-                  className="group flex w-full items-center gap-6 border-b border-line py-6 text-left"
-                >
-                  <span className={`font-mono text-lg tabular ${active === i ? 'text-ink' : 'text-muted'}`}>
-                    {i + 1}
-                  </span>
-                  <span className="flex-1">
-                    <span
-                      className={`font-display block text-2xl font-semibold transition-colors duration-300 sm:text-3xl ${
-                        active === i ? 'text-ink' : 'text-muted'
-                      }`}
-                    >
-                      {s.title}
-                    </span>
-                    <span className="mt-1 block font-mono text-xs text-muted">dès {s.base} €</span>
-                  </span>
-                  <motion.span
-                    aria-hidden="true"
-                    className="text-xl text-ink"
-                    animate={{ opacity: active === i ? 1 : 0, x: active === i ? 0 : -8 }}
-                    transition={{ duration: 0.3, ease }}
-                  >
-                    →
-                  </motion.span>
-                </button>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-
-        <Reveal delay={0.1}>
-          <div className="relative min-h-[420px] overflow-hidden rounded-2xl bg-paper2 p-8 ring-1 ring-line">
-            <span aria-hidden="true" className="font-display pointer-events-none absolute -right-2 -top-6 select-none text-[11rem] font-bold leading-none text-ink/[0.05]">
-              {active + 1}
-            </span>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={active}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.4, ease }}
-                className="relative"
-              >
-                <div className="flex items-center gap-4">
-                  <ServiceIcon index={active} className="h-12 w-12 text-ink" />
-                  <div>
-                    <h3 className="font-display text-2xl font-semibold text-ink">{current.title}</h3>
-                    <p className="mt-0.5 text-sm font-light text-graphite">
-                      {current.desc} <span className="font-mono text-xs text-muted">— dès {current.base} €</span>
-                    </p>
-                  </div>
-                </div>
-                <Estimator service={current} sel={selFor(active)} onToggle={(o) => toggle(active, o)} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </Reveal>
-      </div>
-
-      {/* Mobile: cartes empilées, chacune son estimateur */}
-      <div className="flex flex-col gap-4 lg:hidden">
+    <Section id="services" kicker="Services" lead={services.lead} tone="dune">
+      <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5">
         {services.items.map((s, i) => (
-          <Reveal as="div" key={s.title} delay={i * 0.05}>
-            <div className="relative overflow-hidden rounded-2xl bg-paper2 p-6 ring-1 ring-line">
-              <div className="flex items-center gap-3">
-                <ServiceIcon index={i} className="h-10 w-10 shrink-0 text-ink" />
-                <div>
-                  <h3 className="font-display text-xl font-semibold text-ink">{s.title}</h3>
-                  <p className="mt-0.5 text-sm font-light text-graphite">
-                    {s.desc} <span className="font-mono text-xs text-muted">— dès {s.base} €</span>
+          <motion.li
+            key={s.title}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.9, delay: (i % 2) * 0.1 + Math.floor(i / 2) * 0.08, ease }}
+          >
+            <a
+              href={mail(s.title)}
+              data-cursor="Écrire"
+              className="group relative flex h-full flex-col justify-between overflow-hidden rounded-[1.6rem] bg-paper p-7 ring-1 ring-ink/10 transition-shadow duration-500 hover:shadow-[0_30px_60px_-30px_rgba(36,21,13,0.45)] sm:aspect-square sm:p-10"
+            >
+              {/* l'aplat orange qui monte au survol */}
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 origin-bottom scale-y-0 bg-ember transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100 group-focus-visible:scale-y-100"
+              />
+
+              <div className="relative flex items-start justify-between">
+                <span className="grid h-20 w-20 place-items-center rounded-2xl bg-dune text-ember transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-rotate-3 group-hover:scale-110 group-hover:bg-paper sm:h-24 sm:w-24 lg:h-36 lg:w-36 lg:rounded-3xl">
+                  <span className="block h-11 w-11 sm:h-14 sm:w-14 lg:h-20 lg:w-20">{ICONS[i]}</span>
+                </span>
+                <span className="font-mono text-sm tabular text-ember transition-colors duration-300 group-hover:text-paper">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+              </div>
+
+              <div className="relative mt-10 sm:mt-0">
+                <h3 className="font-display text-[clamp(1.8rem,3.4vw,2.8rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink transition-colors duration-300 group-hover:text-paper">
+                  {s.title}
+                </h3>
+                <div className="mt-4 flex items-end justify-between gap-6">
+                  <p className="max-w-sm text-pretty font-light leading-relaxed text-graphite transition-colors duration-300 group-hover:text-paper/90">
+                    {s.desc}
                   </p>
+                  <span
+                    aria-hidden="true"
+                    className="grid h-12 w-12 shrink-0 place-items-center rounded-full ring-1 ring-ink/20 transition-all duration-500 group-hover:rotate-45 group-hover:bg-paper group-hover:text-ember group-hover:ring-paper sm:h-14 sm:w-14"
+                  >
+                    ↗
+                  </span>
                 </div>
               </div>
-              <Estimator service={s} sel={selFor(i)} onToggle={(o) => toggle(i, o)} />
-            </div>
-          </Reveal>
+            </a>
+          </motion.li>
         ))}
-      </div>
+      </ul>
     </Section>
   )
 }

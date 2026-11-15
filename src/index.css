@@ -33,6 +33,14 @@ body {
   overflow-x: hidden;
 }
 
+/* Les effets qui s'agrandissent (bloc contact, orbites) ne doivent jamais
+   ouvrir un defilement horizontal : on coupe sur les cotes, sans creer de
+   conteneur de defilement (clip, pas hidden). */
+html,
+body {
+  overflow-x: clip;
+}
+
 .font-display {
   font-family: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
 }
@@ -88,18 +96,90 @@ body {
   .caret::after {
     animation: none;
   }
+  .marquee-track,
+  .orbit-spin,
+  .orbit-counter {
+    animation: none;
+  }
   html {
     scroll-behavior: auto;
   }
 }
 
 ::selection {
-  background: #17150f;
+  background: #c2410c;
   color: #f2f0ea;
 }
 
+/* Lenis : le defilement doux remplace le defilement lisse du navigateur. */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* Curseur maison : le curseur systeme disparait, sauf sur les champs. */
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role='button'] {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea,
+html.has-cursor select {
+  cursor: auto;
+}
+
+/* Orbites du hero : les plateaux tournent, les logos contre-tournent pour rester droits. */
+@keyframes orbit {
+  to { transform: rotate(360deg); }
+}
+.orbit-spin {
+  animation: orbit 40s linear infinite;
+}
+.orbit-spin-rev,
+.orbit-counter {
+  animation: orbit 40s linear infinite reverse;
+}
+.orbit-counter-rev {
+  animation-direction: normal;
+}
+.orbit-stage:hover .orbit-spin,
+.orbit-stage:hover .orbit-counter {
+  animation-play-state: paused;
+}
+
+/* Bandes de logos qui defilent. */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 38s linear infinite;
+}
+.marquee-reverse {
+  animation-direction: reverse;
+  animation-duration: 46s;
+}
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
 *:focus-visible {
-  outline: 2px solid #17150f;
+  outline: 2px solid #c2410c;
   outline-offset: 3px;
   border-radius: 2px;
 }

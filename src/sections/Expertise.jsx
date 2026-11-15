@@ -13,7 +13,7 @@ const ACCENTS = {
 
 function Logo({ item }) {
   return (
-    <span className="group inline-flex items-center gap-2.5 rounded-lg px-3 py-2 ring-1 ring-line transition-colors duration-300 hover:bg-white/60">
+    <span className="group inline-flex items-center gap-2.5 rounded-full bg-paper px-4 py-2.5 ring-1 ring-line transition-colors duration-300 hover:bg-white">
       <span className="relative h-5 w-5">
         {item.raster ? (
           // Raster brand logos (webp): desaturated at rest, full colour on hover.
@@ -79,7 +79,7 @@ export default function Expertise() {
   ]
 
   return (
-    <Section id="expertise" kicker="Expertise" lead={expertise.lead} accent="#79c0ff">
+    <Section id="expertise" kicker="Expertise" lead={expertise.lead} tone="cocoa" className="[--accent:#F08A4B]">
       <div className="grid grid-cols-1 items-start gap-8 lg:grid-cols-[1.4fr_0.6fr]">
         <Reveal soft>
           <CodeWindow filename={expertise.filename} badge="TypeScript" lines={lines} />
@@ -90,13 +90,13 @@ export default function Expertise() {
             {g.map((grp) => (
               <div key={grp.key}>
                 <div className="inline-block">
-                  <span className="font-display text-xl font-semibold text-ink">{grp.label}</span>
+                  <span className="font-display text-xl font-semibold text-sand">{grp.label}</span>
                   <span
                     className="mt-1 block h-[3px] w-full rounded-full"
                     style={{ background: ACCENTS[grp.key] }}
                   />
                 </div>
-                <p className="mt-2 font-mono text-xs leading-relaxed text-muted">
+                <p className="mt-2 font-mono text-xs leading-relaxed text-sand/60">
                   {grp.items.join(' · ')}
                 </p>
               </div>
@@ -105,14 +105,21 @@ export default function Expertise() {
         </Reveal>
       </div>
 
-      {/* logo strip */}
-      <Reveal soft delay={0.15}>
-        <div className="mt-12 flex flex-wrap gap-2.5 border-t border-line pt-8">
-          {expertise.logos.map((l) => (
-            <Logo key={l.slug} item={l} />
-          ))}
-        </div>
-      </Reveal>
+      {/* Deux bandes de logos qui defilent en sens inverse ; elles s'arretent
+          au survol (pour lire) et restent immobiles sous « animations reduites ». */}
+      <div className="marquee-mask mt-16 space-y-3 border-t border-sand/15 pt-10">
+        {[false, true].map((reverse) => (
+          <div key={String(reverse)} className="marquee group/m overflow-hidden">
+            <div className={`marquee-track flex w-max gap-2.5 ${reverse ? 'marquee-reverse' : ''}`}>
+              {[...expertise.logos, ...expertise.logos].map((l, i) => (
+                <span key={i} aria-hidden={i >= expertise.logos.length || undefined}>
+                  <Logo item={l} />
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </Section>
   )
 }
