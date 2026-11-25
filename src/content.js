@@ -155,6 +155,11 @@ export const content = {
         blurb:
           "Serveur mail auto-hébergé pour QuakBox, mis en place sur le serveur du client, au sein de l'équipe de Gatien Georges. Mailcow (Postfix, Dovecot, Rspamd, webmail) branché derrière le nginx existant sans interrompre les six sites déjà en production ; TLS sur tous les ports, authentification complète du domaine (SPF, DKIM, DMARC, DNS inverse), 52 alias, et envoi et réception vérifiés avec Gmail et Outlook.",
         tags: ['Mailcow', 'Postfix', 'Dovecot', 'Nginx', 'Docker', 'DNS'],
+        // `internal` : lien interne (ancre) ; il ferme la fiche ouverte puis fait defiler.
+        links: [
+          { label: 'Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
+          { label: 'Voir l’avis', url: '#avis', internal: true },
+        ],
         participation: {
           role: 'Serveur mail, au sein d’une équipe',
           status: 'Livré et documenté · août 2026',
@@ -316,7 +321,7 @@ export const content = {
         quote:
           'Hermes is truly one of the top all-around professionals in the industry. His extensive full-stack experience shows in every interaction, and his commitment to honesty sets him apart. He consistently goes above and beyond to ensure his clients are fully satisfied in every circumstance. Five stars are simply not enough to describe how professional, reliable, and genuinely honest he is. Thank you, Hermes, for everything you do, your dedication speaks for itself.',
         lang: 'en',
-        author: 'Gatien Georges',
+        author: 'Gatien Georges (QuakBox)',
         meta: 'Client · Upwork · Août 2026',
         rating: 5,
         source: { label: 'Profil Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },

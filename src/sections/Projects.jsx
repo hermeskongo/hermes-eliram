@@ -54,23 +54,38 @@ function Cover({ p, className, style, transition }) {
   )
 }
 
-function Links({ p, dark = false }) {
+function Links({ p, dark = false, onClose }) {
+  const lenis = useLenis()
   const links = p.links?.length ? p.links : p.url ? [{ label: 'Voir le projet', url: p.url }] : []
   if (!links.length) return null
+
+  // Lien interne (ancre) : on ferme la fiche si elle est ouverte, puis on descend.
+  const go = (e, id) => {
+    e.preventDefault()
+    onClose?.()
+    setTimeout(() => {
+      const el = document.getElementById(id)
+      if (!el) return
+      if (lenis) lenis.scrollTo(el, { offset: -80 })
+      else el.scrollIntoView({ behavior: 'smooth' })
+    }, onClose ? 700 : 0)
+  }
+
   return (
     <div className="flex flex-wrap gap-2.5">
       {links.map((l) => (
         <a
           key={l.label}
           href={l.url}
-          target="_blank"
-          rel="noreferrer"
+          {...(l.internal ? { onClick: (e) => go(e, l.url.slice(1)) } : { target: '_blank', rel: 'noreferrer' })}
           className={`group/l inline-flex min-h-[44px] items-center gap-2 rounded-full px-4 font-mono text-xs uppercase tracking-[0.1em] ring-1 transition-colors duration-300 ${
             dark ? 'text-sand ring-sand/25 hover:bg-sand hover:text-cocoa' : 'text-ink ring-ink/15 hover:bg-ink hover:text-paper'
           }`}
         >
           {l.label}
-          <span className="transition-transform duration-300 group-hover/l:-translate-y-0.5 group-hover/l:translate-x-0.5">↗</span>
+          <span className="transition-transform duration-300 group-hover/l:-translate-y-0.5 group-hover/l:translate-x-0.5">
+            {l.internal ? '↓' : '↗'}
+          </span>
         </a>
       ))}
     </div>
@@ -254,7 +269,7 @@ function Detail({ p, onClose }) {
               </ul>
             )}
             <div className="mt-8">
-              <Links p={p} dark />
+              <Links p={p} dark onClose={onClose} />
             </div>
           </div>
         </motion.div>
