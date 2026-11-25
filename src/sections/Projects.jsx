@@ -28,6 +28,32 @@ function Badge({ p }) {
   )
 }
 
+/*
+  Le visuel d'un projet. Sans image (Quackbox : pas de capture a montrer), une
+  couverture typographique brune, avec le meme layoutId que l'image pour que
+  l'ouverture de la fiche reste fluide.
+*/
+function Cover({ p, className, style, transition }) {
+  if (p.image) {
+    return (
+      <motion.img layoutId={`img-${p.name}`} src={p.image} alt={`Aperçu — ${p.name}`} loading="lazy" style={style} transition={transition} className={className} />
+    )
+  }
+  return (
+    <motion.div
+      layoutId={`img-${p.name}`}
+      role="img"
+      aria-label={`Aperçu — ${p.name}`}
+      style={style}
+      transition={transition}
+      className={`${className} flex flex-col items-center justify-center gap-4 bg-cocoa text-center`}
+    >
+      <span className="font-display text-[clamp(2.4rem,7vw,5rem)] font-extrabold leading-none tracking-[-0.04em] text-sand">{p.name}</span>
+      {p.badge && <span className="font-mono text-xs uppercase tracking-[0.2em] text-clay">{p.badge}</span>}
+    </motion.div>
+  )
+}
+
 function Links({ p, dark = false }) {
   const links = p.links?.length ? p.links : p.url ? [{ label: 'Voir le projet', url: p.url }] : []
   if (!links.length) return null
@@ -77,16 +103,7 @@ function Row({ p, i, onOpen, open }) {
           style={reduce ? undefined : { clipPath }}
           className="group relative block aspect-[3/2] w-full overflow-hidden rounded-[1.6rem] bg-paper2"
         >
-          {!open && (
-            <motion.img
-              layoutId={`img-${p.name}`}
-              src={p.image}
-              alt={`Aperçu — ${p.name}`}
-              loading="lazy"
-              style={reduce ? undefined : { scale }}
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
+          {!open && <Cover p={p} style={reduce ? undefined : { scale }} className="absolute inset-0 h-full w-full object-cover" />}
           <span className="absolute inset-0 bg-cocoa/0 transition-colors duration-500 group-hover:bg-cocoa/15" />
           <span className="absolute bottom-4 right-4 grid h-12 w-12 place-items-center rounded-full bg-paper text-lg text-ink opacity-0 shadow-lg transition-all duration-500 group-hover:opacity-100 md:hidden">
             ↗
@@ -118,13 +135,15 @@ function Row({ p, i, onOpen, open }) {
               {[p.participation.role, p.participation.duration].filter(Boolean).join(' · ')}
             </p>
           )}
-          <ul className="mt-5 flex flex-wrap gap-2">
-            {p.tags.map((t) => (
-              <li key={t} className="rounded-full bg-paper2 px-3 py-1 font-mono text-[0.7rem] text-graphite ring-1 ring-line">
-                {t}
-              </li>
-            ))}
-          </ul>
+          {p.tags?.length > 0 && (
+            <ul className="mt-5 flex flex-wrap gap-2">
+              {p.tags.map((t) => (
+                <li key={t} className="rounded-full bg-paper2 px-3 py-1 font-mono text-[0.7rem] text-graphite ring-1 ring-line">
+                  {t}
+                </li>
+              ))}
+            </ul>
+          )}
           <div className="mt-7 flex flex-wrap items-center gap-2.5">
             <button
               type="button"
@@ -186,13 +205,7 @@ function Detail({ p, onClose }) {
           </button>
         </div>
 
-        <motion.img
-          layoutId={`img-${p.name}`}
-          src={p.image}
-          alt={`Aperçu — ${p.name}`}
-          className="mt-4 aspect-[3/2] w-full rounded-[1.6rem] object-cover"
-          transition={{ duration: 0.8, ease }}
-        />
+        <Cover p={p} className="mt-4 aspect-[3/2] w-full rounded-[1.6rem] object-cover" transition={{ duration: 0.8, ease }} />
 
         <motion.div
           initial={{ opacity: 0, y: 40 }}
@@ -231,13 +244,15 @@ function Detail({ p, onClose }) {
                 <span className="select-all whitespace-pre">{p.install}</span>
               </div>
             )}
-            <ul className="mt-6 flex flex-wrap gap-2">
-              {p.tags.map((t) => (
-                <li key={t} className="rounded-full px-3 py-1 font-mono text-[0.7rem] text-sand/80 ring-1 ring-sand/20">
-                  {t}
-                </li>
-              ))}
-            </ul>
+            {p.tags?.length > 0 && (
+              <ul className="mt-6 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <li key={t} className="rounded-full px-3 py-1 font-mono text-[0.7rem] text-sand/80 ring-1 ring-sand/20">
+                    {t}
+                  </li>
+                ))}
+              </ul>
+            )}
             <div className="mt-8">
               <Links p={p} dark />
             </div>

@@ -100,6 +100,11 @@ export default function Services() {
       `Bonjour Hermes,\n\nJe souhaite un projet de type « ${title} » (${active.label.toLowerCase()}).\n\nMon besoin : `
     )}`
 
+  const joinMail = (j) =>
+    `mailto:${identity.email}?subject=${encodeURIComponent(j.subject)}&body=${encodeURIComponent(
+      `Bonjour Hermes,\n\nNous aimerions échanger sur une collaboration à distance.\n\nNotre entreprise : \nLe poste ou la mission : `
+    )}`
+
   // Fleches gauche/droite, Debut, Fin : le focus suit l'onglet choisi.
   const onKeyDown = (e) => {
     const n = services.audiences.length
@@ -200,6 +205,35 @@ export default function Services() {
             </motion.li>
           ))}
         </ul>
+
+        {/* L'offre d'integrer l'equipe, a distance : sous les cartes, pleine largeur. */}
+        {active.join && (
+          <motion.a
+            key={`${active.id}-join`}
+            href={joinMail(active.join)}
+            data-cursor="Écrire"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.4 }}
+            transition={{ duration: 0.9, ease }}
+            className="group relative mt-4 flex flex-col gap-6 overflow-hidden rounded-[1.6rem] bg-cocoa p-7 text-sand sm:mt-5 sm:flex-row sm:items-center sm:justify-between sm:p-10"
+          >
+            <span
+              aria-hidden="true"
+              className="absolute inset-0 origin-left scale-x-0 bg-ember transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-x-100 group-focus-visible:scale-x-100"
+            />
+            <div className="relative max-w-2xl">
+              <h3 className="font-display text-[clamp(1.6rem,3vw,2.4rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
+                {active.join.title}
+              </h3>
+              <p className="mt-3 text-pretty font-light leading-relaxed text-sand/85">{active.join.desc}</p>
+            </div>
+            <span className="relative inline-flex min-h-[48px] shrink-0 items-center gap-3 self-start rounded-full bg-sand px-6 font-mono text-xs uppercase tracking-[0.1em] text-cocoa sm:self-auto">
+              {active.join.cta}
+              <span aria-hidden="true" className="transition-transform duration-300 group-hover:rotate-45">↗</span>
+            </span>
+          </motion.a>
+        )}
       </div>
     </Section>
   )
