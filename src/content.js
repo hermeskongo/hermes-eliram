@@ -67,12 +67,6 @@ export const content = {
         text: 'J’intègre IGA Casablanca, où je suis aujourd’hui en 3ᵉ année.',
       },
       {
-        period: '2024 — aujourd’hui',
-        title: 'Freelance et travail en équipe',
-        text: 'Mes premières interventions freelance, que je poursuis : missions fullstack à distance, avec un avis cinq étoiles d’un client sur Upwork en août 2026. J’ai aussi rejoint l’équipe d’un client, pour mettre en place le serveur mail de QuakBox.',
-        tags: ['Fullstack', 'Remote', 'Équipe'],
-      },
-      {
         period: '2026',
         title: 'Smart-Elec : 2ᵉ place',
         text: 'Station météo connectée : capteurs Arduino, backend Python et tableau de bord web en direct. Un projet primé au concours.',
@@ -85,10 +79,16 @@ export const content = {
         tags: ['TypeScript', 'npm', 'PostgreSQL'],
       },
       {
-        period: '2026 — aujourd’hui',
+        period: '2026',
         title: 'Elgo, une plateforme de livraison',
         text: 'Conçue et développée seul en environ 8 mois, et je continue d’en assurer le développement. Trois applications mobiles publiées sur l’App Store et Google Play, deux back-offices web et une API centrale testée (près de 1 800 tests d’intégration).',
         tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO'],
+      },
+      {
+        period: 'Aujourd’hui',
+        title: 'Freelance, ouvert à une collaboration',
+        text: 'Freelance depuis 2024, à distance. C’est dans ce cadre que j’ai réalisé Apicore, Elgo et le serveur mail de QuakBox. Aujourd’hui, je travaille principalement sur des plateformes e-commerce, avec quelques sites vitrines et logiciels internes. Je suis ouvert à rejoindre une équipe, à distance.',
+        tags: ['E-commerce', 'Sites vitrines', 'Logiciels internes', 'Remote'],
       },
     ],
   },
@@ -170,7 +170,7 @@ export const content = {
         name: 'Apicore',
         year: '2026',
         category: 'E-commerce · Fullstack',
-        badge: 'Démo en ligne',
+        badge: 'En production',
         blurb:
           "Boutique e-commerce complète de matériel apicole pour l'Afrique de l'Ouest : catalogue filtré par catégorie, panier, checkout et suivi de commande. Le tout doublé d'un back-office admin complet — gestion des produits, commandes en temps réel et analytics (chiffre d'affaires, panier moyen, top produits). Next.js, PostgreSQL/Prisma et authentification NextAuth.",
         tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth'],
@@ -325,6 +325,13 @@ export const content = {
         meta: 'Client · Upwork · Août 2026',
         rating: 5,
         source: { label: 'Profil Upwork', url: 'https://www.upwork.com/freelancers/~01da2964c90bee8c17' },
+      },
+      {
+        quote:
+          "Hermes est très à l'écoute de mes demandes : chaque fonctionnalité a été implémentée avec un bon suivi. La plateforme est bien meilleure que ce que j'imaginais au départ. Il a dépassé mes attentes en fonctionnalités, en délais et en finition, même visuellement. Vraiment, c'est du propre.",
+        lang: 'fr',
+        author: 'Alice Traoré',
+        meta: 'Cliente',
       },
     ],
   },
