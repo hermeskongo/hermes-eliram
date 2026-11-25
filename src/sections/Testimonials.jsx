@@ -41,11 +41,13 @@ function Entry({ t, first }) {
 
       <Reveal delay={0.12}>
         <div className="border-t border-sand/15 pt-8 lg:border-l lg:border-t-0 lg:pl-10 lg:pt-0">
-          <div className="flex items-center gap-3">
-            <Stars n={t.rating} />
-            <span className="font-mono text-sm tabular text-sand/60">{t.rating.toFixed(1)} / 5</span>
-          </div>
-          <p className="font-display mt-5 text-2xl font-semibold tracking-tight text-sand">{t.author}</p>
+          {t.rating && (
+            <div className="flex items-center gap-3">
+              <Stars n={t.rating} />
+              <span className="font-mono text-sm tabular text-sand/60">{t.rating.toFixed(1)} / 5</span>
+            </div>
+          )}
+          <p className={`font-display text-2xl font-semibold tracking-tight text-sand ${t.rating ? 'mt-5' : ''}`}>{t.author}</p>
           <p className="mt-1.5 font-mono text-xs uppercase tracking-[0.14em] text-sand/60">{t.meta}</p>
           {t.source && (
             <a
