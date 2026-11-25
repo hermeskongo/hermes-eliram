@@ -113,6 +113,16 @@ export default function Hero() {
               </span>
             </a>
           </Magnetic>
+          <Magnetic>
+            <a
+              href={identity.cv.url}
+              download={identity.cv.filename}
+              className="group inline-flex min-h-[52px] items-center gap-3 rounded-full px-6 font-mono text-sm uppercase tracking-[0.1em] text-ink ring-1 ring-ink/25 transition-colors duration-300 hover:bg-ink hover:text-paper"
+            >
+              {identity.cv.label}
+              <span aria-hidden="true" className="transition-transform duration-300 ease-out group-hover:translate-y-0.5">↓</span>
+            </a>
+          </Magnetic>
         </motion.div>
       </motion.div>
 

@@ -72,6 +72,15 @@ export default function Contact() {
                 <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-x-1">→</span>
               </a>
               <ul className="mt-10 flex flex-wrap gap-x-8 gap-y-2">
+                <li>
+                  <a
+                    href={identity.cv.url}
+                    download={identity.cv.filename}
+                    className="inline-flex min-h-[44px] items-center font-mono text-sm uppercase tracking-[0.14em] text-paper transition-colors hover:text-cocoa"
+                  >
+                    CV (PDF) ↓
+                  </a>
+                </li>
                 {identity.socials.map((s) => (
                   <li key={s.label}>
                     <a

@@ -18,6 +18,8 @@ export const content = {
       { value: 2, suffix: 'ᵉ', label: 'place au concours Smart-Elec 2026' },
     ],
     email: 'hermeskongo@gmail.com',
+    // CV en PDF, servi depuis public/cv/. Pour le mettre a jour : remplacer le fichier.
+    cv: { label: 'Télécharger mon CV', url: '/cv/CV-Hermes-KONGO.pdf', filename: 'CV-Hermes-KONGO.pdf' },
     status: 'Disponible',
     socials: [
       { label: 'GitHub', url: 'https://github.com/hermeskongo' },
