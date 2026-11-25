@@ -43,22 +43,34 @@ export const content = {
     ],
   },
 
-  // Parcours : seulement des faits verifiables. Pour allonger la frise, ajouter
-  // un objet dans `steps` (le plus recent en premier).
+  // Parcours : seulement des faits verifiables, du plus ancien au plus recent
+  // (la frise se remplit en descendant). La derniere etape est « en cours ».
+  // `link` ajoute un lien a l'etape.
   parcours: {
     lead: 'Mon parcours dans la *tech*, côté développement web.',
     steps: [
       {
-        period: '2026 — aujourd’hui',
-        title: 'Elgo, une plateforme de livraison',
-        text: "Conçue et développée seul en environ 8 mois, et je continue d’en assurer le développement. Trois applications mobiles publiées sur l’App Store et Google Play, deux back-offices web et une API centrale testée (près de 1 800 tests d’intégration).",
-        tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO'],
+        period: 'Fin 2021',
+        title: 'Les premiers pas, avec Grafikart',
+        text: "Je commence le développement web en autodidacte avec les tutoriels de Grafikart : HTML, CSS, JavaScript et PHP, puis l’algorithmique et les bases de la programmation.",
+        tags: ['HTML', 'CSS', 'JavaScript', 'PHP'],
+        link: { label: 'grafikart.fr', url: 'https://grafikart.fr' },
       },
       {
-        period: '2026',
-        title: 'Freelance, en ligne',
-        text: 'Missions fullstack à distance pour des clients, sur Upwork. Avis cinq étoiles d’un client en août 2026.',
-        tags: ['Upwork', 'Fullstack', 'Remote'],
+        period: '2022 — 2024',
+        title: 'Des projets pour progresser',
+        text: 'Je consolide mes compétences en construisant des projets personnels, de la classe de première au lycée jusqu’à ma première année d’université, en parallèle de mes études.',
+      },
+      {
+        period: '2024',
+        title: 'IGA Casablanca',
+        text: 'J’intègre IGA Casablanca, où je suis aujourd’hui en 3ᵉ année.',
+      },
+      {
+        period: '2024 — aujourd’hui',
+        title: 'Freelance et travail en équipe',
+        text: 'Mes premières interventions freelance, que je poursuis : missions fullstack à distance, avec un avis cinq étoiles d’un client sur Upwork en août 2026. J’ai aussi rejoint l’équipe d’un client, pour mettre en place le serveur mail de QuakBox.',
+        tags: ['Fullstack', 'Remote', 'Équipe'],
       },
       {
         period: '2026',
@@ -71,6 +83,12 @@ export const content = {
         title: 'Open source : Seedly',
         text: 'Un outil en ligne de commande publié sur npm : il génère des jeux de données PostgreSQL cohérents en lisant le schéma.',
         tags: ['TypeScript', 'npm', 'PostgreSQL'],
+      },
+      {
+        period: '2026 — aujourd’hui',
+        title: 'Elgo, une plateforme de livraison',
+        text: 'Conçue et développée seul en environ 8 mois, et je continue d’en assurer le développement. Trois applications mobiles publiées sur l’App Store et Google Play, deux back-offices web et une API centrale testée (près de 1 800 tests d’intégration).',
+        tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO'],
       },
     ],
   },
@@ -129,6 +147,21 @@ export const content = {
         image: '/projects/elgo-cover.webp',
       },
       {
+        name: 'QuakBox',
+        year: '2026',
+        category: 'Infrastructure · Mission',
+        badge: 'Travail en équipe',
+        badgeColor: '#ffa657',
+        blurb:
+          "Serveur mail auto-hébergé pour QuakBox, mis en place sur le serveur du client, au sein de l'équipe de Gatien Georges. Mailcow (Postfix, Dovecot, Rspamd, webmail) branché derrière le nginx existant sans interrompre les six sites déjà en production ; TLS sur tous les ports, authentification complète du domaine (SPF, DKIM, DMARC, DNS inverse), 52 alias, et envoi et réception vérifiés avec Gmail et Outlook.",
+        tags: ['Mailcow', 'Postfix', 'Dovecot', 'Nginx', 'Docker', 'DNS'],
+        participation: {
+          role: 'Serveur mail, au sein d’une équipe',
+          status: 'Livré et documenté · août 2026',
+          text: "Je suis intervenu aux côtés des autres développeurs de Gatien Georges, sur la partie messagerie : choix de l'architecture, installation, réglage de la délivrabilité, puis un guide de passation de neuf pages pour que l'équipe puisse exploiter, modifier ou reconstruire le serveur sans dépendre de moi.",
+        },
+      },
+      {
         name: 'Apicore',
         year: '2026',
         category: 'E-commerce · Fullstack',
@@ -136,6 +169,7 @@ export const content = {
         blurb:
           "Boutique e-commerce complète de matériel apicole pour l'Afrique de l'Ouest : catalogue filtré par catégorie, panier, checkout et suivi de commande. Le tout doublé d'un back-office admin complet — gestion des produits, commandes en temps réel et analytics (chiffre d'affaires, panier moyen, top produits). Next.js, PostgreSQL/Prisma et authentification NextAuth.",
         tags: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth'],
+        participation: { role: 'Développé seul', text: 'Boutique, back-office, base de données et authentification : tout est de moi.' },
         links: [{ label: 'Voir le site', url: 'https://apicore-eta.vercel.app/' }],
         url: 'https://apicore-eta.vercel.app/',
         image: '/projects/apicore-cover.webp',
@@ -147,6 +181,7 @@ export const content = {
         blurb:
           "Suivi d'habitudes 100 % hors-ligne : séries, heatmap sur six mois et statistiques par habitude.",
         tags: ['Flutter', 'Dart', 'Riverpod', 'SQLite'],
+        participation: { role: 'Développé seul', text: 'Conception, développement et stockage hors-ligne : tout est de moi.' },
         url: 'https://github.com/hermeskongo/flutter-habit-tracker',
         image: '/projects/flutter-habit-tracker.webp',
       },
@@ -157,6 +192,7 @@ export const content = {
         blurb:
           "Plateforme d'échange linguistique : matching par langues, messagerie temps réel et appels vidéo.",
         tags: ['React', 'Express', 'PostgreSQL', 'Stream SDK'],
+        participation: { role: 'Développé seul', text: 'Front, API, base de données, messagerie et appels vidéo : tout est de moi.' },
         url: 'https://github.com/hermeskongo/fluently',
         image: '/projects/fluently-cover.webp',
       },
@@ -168,6 +204,7 @@ export const content = {
         blurb:
           'Projet open source, publié sur npm : génère des jeux de données PostgreSQL cohérents en lisant le schéma — clés étrangères, contraintes et données réalistes, sans fichiers de seed à maintenir.',
         tags: ['TypeScript', 'PostgreSQL', 'Node.js', 'CLI'],
+        participation: { role: 'Développé seul', text: 'Conception, développement, documentation et publication sur npm : tout est de moi.' },
         install: 'npm i @elirames/seedly',
         links: [
           { label: 'npm', url: 'https://www.npmjs.com/package/@elirames/seedly' },
@@ -186,6 +223,7 @@ export const content = {
         blurb:
           "Station météo connectée, primée au concours Smart-Elec 2026 : température, humidité, pression et luminosité en temps réel, avec pilotage automatique et manuel d'un ventilateur. Arduino et capteurs, backend Python, dashboard web live.",
         tags: ['Arduino', 'Python', 'Flask-SocketIO', 'IoT'],
+        participation: { role: 'Développé seul', text: 'Capteurs Arduino, backend Python et dashboard web : tout est de moi.' },
         url: 'https://github.com/hermeskongo/IoT_weather_project',
         image: '/projects/iot-cover.webp',
       },
@@ -229,7 +267,7 @@ export const content = {
       {
         id: 'entreprises',
         label: 'En entreprise',
-        intro: 'Un produit ou un outil interne, avec un back-end solide, testé et prêt à tenir la charge.',
+        intro: 'Un produit, un outil interne ou un développeur de plus dans votre équipe : un back-end solide, testé, et une vraie collaboration à distance.',
         items: [
           {
             icon: 'saas',
@@ -252,6 +290,13 @@ export const content = {
             desc: 'iOS et Android, de la maquette à la publication, reliées à votre back-end.',
           },
         ],
+        // Bandeau sous les cartes : l'offre d'integrer l'equipe, a distance.
+        join: {
+          title: 'Intégrer votre équipe, à distance',
+          desc: 'Je suis aussi ouvert à une collaboration plus durable : rejoindre votre entreprise comme développeur, en remote, et travailler avec vos équipes.',
+          cta: 'Proposer une collaboration',
+          subject: 'Collaboration à distance',
+        },
       },
     ],
   },

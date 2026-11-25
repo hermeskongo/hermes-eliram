@@ -59,29 +59,37 @@ export default function Footer() {
           </div>
         </div>
 
-        <motion.p
-          aria-label={`${identity.family} ${name}`}
-          className="flex select-none justify-center overflow-hidden whitespace-nowrap pt-6 font-display text-[clamp(3.4rem,15.5vw,15rem)] font-extrabold leading-[0.85] tracking-[-0.05em] text-sand"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
-        >
-          {name.split('').map((c, i) => (
-            <motion.span
-              key={i}
-              aria-hidden="true"
-              className={`inline-block ${c === ' ' ? 'w-[0.25em]' : ''}`}
-              variants={reduce ? {} : { hidden: { y: '100%' }, show: { y: '0%', transition: { duration: 1, ease } } }}
-            >
-              {c === ' ' ? ' ' : c}
-            </motion.span>
-          ))}
-        </motion.p>
+        {/*
+          Le nom remplit la largeur de son conteneur, jamais plus : la taille se
+          calcule en cqw (largeur du conteneur), pas en vw, pour que « Hermes
+          Eliram » tienne en entier a toutes les tailles d'ecran. 15 cqw laisse de la
+          marge : Bricolage Grotesque s'elargit a petite taille (axe optique), le
+          texte n'est donc pas strictement proportionnel a la taille.
+        */}
+        <div className="[container-type:inline-size]">
+          <motion.p
+            aria-label={`${identity.family} ${name}`}
+            className="flex select-none justify-center overflow-hidden whitespace-nowrap pt-6 font-display text-[15cqw] font-extrabold leading-[0.85] tracking-[-0.05em] text-sand"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.4 }}
+            variants={{ hidden: {}, show: { transition: { staggerChildren: 0.04 } } }}
+          >
+            {name.split('').map((c, i) => (
+              <motion.span
+                key={i}
+                aria-hidden="true"
+                className={`inline-block ${c === ' ' ? 'w-[0.25em]' : ''}`}
+                variants={reduce ? {} : { hidden: { y: '100%' }, show: { y: '0%', transition: { duration: 1, ease } } }}
+              >
+                {c === ' ' ? ' ' : c}
+              </motion.span>
+            ))}
+          </motion.p>
+        </div>
 
-        <div className="flex flex-col gap-2 border-t border-sand/15 py-6 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sand/55 sm:flex-row sm:justify-between">
+        <div className="border-t border-sand/15 py-6 font-mono text-[0.7rem] uppercase tracking-[0.16em] text-sand/55">
           <span>© {new Date().getFullYear()} {identity.family} {identity.given}</span>
-          <span>Conçu &amp; codé main</span>
         </div>
       </div>
     </footer>

@@ -117,7 +117,7 @@ export default function Hero() {
       </motion.div>
 
       <motion.div style={{ y: wide ? deckY : 0, rotate: wide ? deckR : 0 }} className="w-full">
-        <Orbit go={go} portrait={{ src: '/character.webp', alt: 'Illustration de Hermes' }} />
+        <Orbit go={go} portrait={{ src: '/personal-brand.webp', alt: 'Portrait de Hermes' }} />
       </motion.div>
     </section>
   )

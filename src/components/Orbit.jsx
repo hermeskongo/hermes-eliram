@@ -129,7 +129,7 @@ export default function Orbit({ go = true, portrait }) {
           transition={{ duration: 1, delay: 0.05, ease }}
           style={{ x: '-50%', y: '-50%', translateZ: 40 }}
         >
-          <img src={portrait.src} alt={portrait.alt} className="h-full w-full object-cover object-top" draggable={false} />
+          <img src={portrait.src} alt={portrait.alt} className="h-full w-full object-cover object-[50%_22%]" draggable={false} />
         </motion.div>
 
         {/* pastille « disponible » */}
