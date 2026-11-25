@@ -330,7 +330,7 @@ export const content = {
         quote:
           "Hermes est très à l'écoute de mes demandes : chaque fonctionnalité a été implémentée avec un bon suivi. La plateforme est bien meilleure que ce que j'imaginais au départ. Il a dépassé mes attentes en fonctionnalités, en délais et en finition, même visuellement. Vraiment, c'est du propre.",
         lang: 'fr',
-        author: 'Alice Traoré',
+        author: 'Alice Traoré (Apicore)',
         meta: 'Cliente',
       },
     ],
