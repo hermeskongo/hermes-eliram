@@ -113,6 +113,11 @@ function Row({ p, i, onOpen, open }) {
           </div>
           <h3 className="font-display mt-3 text-[clamp(2rem,3.6vw,3rem)] font-semibold leading-[1.02] tracking-[-0.03em] text-ink">{p.name}</h3>
           <p className="mt-4 line-clamp-4 text-pretty font-light leading-relaxed text-graphite">{p.blurb}</p>
+          {p.participation && (
+            <p className="mt-4 font-mono text-xs uppercase tracking-[0.12em] text-ember">
+              {[p.participation.role, p.participation.duration].filter(Boolean).join(' · ')}
+            </p>
+          )}
           <ul className="mt-5 flex flex-wrap gap-2">
             {p.tags.map((t) => (
               <li key={t} className="rounded-full bg-paper2 px-3 py-1 font-mono text-[0.7rem] text-graphite ring-1 ring-line">
@@ -205,6 +210,21 @@ function Detail({ p, onClose }) {
           </div>
           <div className="md:col-span-7">
             <p className="text-pretty text-lg font-light leading-relaxed text-sand/85 sm:text-xl">{p.blurb}</p>
+            {p.participation && (
+              <div className="mt-8 rounded-2xl bg-black/20 p-5 ring-1 ring-sand/10 sm:p-6">
+                <h4 className="font-mono text-xs uppercase tracking-[0.18em] text-clay">Ma participation</h4>
+                <ul className="mt-3 flex flex-wrap gap-2">
+                  {[p.participation.role, p.participation.duration, p.participation.status].filter(Boolean).map((t) => (
+                    <li key={t} className="rounded-full bg-sand/10 px-3 py-1 font-mono text-[0.7rem] text-sand ring-1 ring-sand/20">
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+                {p.participation.text && (
+                  <p className="mt-4 text-pretty font-light leading-relaxed text-sand/85">{p.participation.text}</p>
+                )}
+              </div>
+            )}
             {p.install && (
               <div className="mt-6 inline-flex items-center gap-2 rounded-lg bg-black/30 px-3 py-2 font-mono text-xs ring-1 ring-sand/10">
                 <span className="select-none text-clay">$</span>

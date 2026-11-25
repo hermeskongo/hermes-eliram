@@ -27,6 +27,7 @@ export const content = {
 
   nav: [
     { id: 'about', label: 'À propos' },
+    { id: 'parcours', label: 'Parcours' },
     { id: 'expertise', label: 'Expertise' },
     { id: 'work', label: 'Projets' },
     { id: 'avis', label: 'Avis' },
@@ -39,6 +40,38 @@ export const content = {
     paragraphs: [
       "Depuis plusieurs années, je construis des applications complètes : interfaces soignées, back-ends solides, et tout ce qu'il y a entre les deux — web, mobile, API et infrastructure.",
       "Je reprends aussi l'existant : terminer un projet en cours, corriger des bugs, stabiliser, améliorer un segment puis mettre en production. J'aime le travail bien fait — un code lisible, des produits rapides, des détails qui tiennent la route.",
+    ],
+  },
+
+  // Parcours : seulement des faits verifiables. Pour allonger la frise, ajouter
+  // un objet dans `steps` (le plus recent en premier).
+  parcours: {
+    lead: 'Mon parcours dans la *tech*, côté développement web.',
+    steps: [
+      {
+        period: '2026 — aujourd’hui',
+        title: 'Elgo, une plateforme de livraison',
+        text: "Conçue et développée seul en environ 8 mois, et je continue d’en assurer le développement. Trois applications mobiles publiées sur l’App Store et Google Play, deux back-offices web et une API centrale testée (près de 1 800 tests d’intégration).",
+        tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO'],
+      },
+      {
+        period: '2026',
+        title: 'Freelance, en ligne',
+        text: 'Missions fullstack à distance pour des clients, sur Upwork. Avis cinq étoiles d’un client en août 2026.',
+        tags: ['Upwork', 'Fullstack', 'Remote'],
+      },
+      {
+        period: '2026',
+        title: 'Smart-Elec : 2ᵉ place',
+        text: 'Station météo connectée : capteurs Arduino, backend Python et tableau de bord web en direct. Un projet primé au concours.',
+        tags: ['Arduino', 'Python', 'Flask-SocketIO'],
+      },
+      {
+        period: '2026',
+        title: 'Open source : Seedly',
+        text: 'Un outil en ligne de commande publié sur npm : il génère des jeux de données PostgreSQL cohérents en lisant le schéma.',
+        tags: ['TypeScript', 'npm', 'PostgreSQL'],
+      },
     ],
   },
 
@@ -80,6 +113,14 @@ export const content = {
         blurb:
           "Plateforme de livraison multi-acteurs, conçue et développée de bout en bout : trois applications mobiles publiées sur l'App Store et Google Play — client, livreur, partenaire — deux back-offices web et une API centrale qui orchestre commandes, courses et paiements. Suivi des livraisons en temps réel, notifications push, files de tâches et commissions calculées à la course.",
         tags: ['Flutter', 'Node.js', 'PostgreSQL', 'Socket.IO', 'Redis', 'Docker'],
+        // « Ma participation » : role + duree s'affichent sur la ligne du
+        // projet ; la fiche ouverte ajoute le statut et le texte.
+        participation: {
+          role: 'Développé seul, de bout en bout',
+          duration: 'Environ 8 mois',
+          status: 'Toujours en développement',
+          text: "Conception, développement, publication et exploitation : trois applications mobiles, deux back-offices web, l'API et l'infrastructure. J'ai tout écrit seul en environ 8 mois, et j'en assure toujours le développement au quotidien.",
+        },
         links: [
           { label: 'App Store', url: 'https://apps.apple.com/us/developer/elgo/id6790060298' },
           { label: 'Google Play', url: 'https://play.google.com/store/apps/developer?id=Elgo' },
@@ -153,24 +194,64 @@ export const content = {
 
   // Services : volontairement simple, sans prix ni options. Chaque ligne ouvre
   // un e-mail deja titre avec le service choisi.
+  // Deux onglets : chacun porte ses quatre services. `icon` designe le dessin
+  // dans Services.jsx (vitrine, saas, ecom, mobile, api, reprise).
   services: {
-    lead: 'Ce que je *construis* pour vous.',
-    items: [
+    lead: 'Ce que je *conçois* pour vous.',
+    audiences: [
       {
-        title: 'Site vitrine',
-        desc: 'Un site rapide et soigné qui présente votre activité et transforme les visiteurs en contacts.',
+        id: 'particuliers',
+        label: 'Particuliers',
+        intro: 'Indépendant, artisan, créateur : un outil à votre mesure, que vous pouvez faire vivre seul.',
+        items: [
+          {
+            icon: 'vitrine',
+            title: 'Site vitrine',
+            desc: 'Un site rapide et soigné qui présente votre activité et transforme les visiteurs en contacts.',
+          },
+          {
+            icon: 'ecom',
+            title: 'Boutique en ligne',
+            desc: 'Catalogue, panier et paiement en ligne pour vendre sans intermédiaire, avec un espace pour tout gérer.',
+          },
+          {
+            icon: 'mobile',
+            title: 'Application mobile',
+            desc: 'iOS et Android, de la maquette à la publication sur les stores.',
+          },
+          {
+            icon: 'reprise',
+            title: 'Reprise de projet',
+            desc: 'Un site ou une application à terminer, un bug à corriger : je reprends, je stabilise et je mets en ligne.',
+          },
+        ],
       },
       {
-        title: 'SaaS',
-        desc: 'Une application web complète : comptes, abonnements, tableau de bord et back-end solide.',
-      },
-      {
-        title: 'Application e-commerce',
-        desc: 'Catalogue, panier, commandes et paiement en ligne, avec un back-office pour tout gérer.',
-      },
-      {
-        title: 'Application mobile',
-        desc: 'iOS et Android, de la maquette à la publication sur les stores.',
+        id: 'entreprises',
+        label: 'En entreprise',
+        intro: 'Un produit ou un outil interne, avec un back-end solide, testé et prêt à tenir la charge.',
+        items: [
+          {
+            icon: 'saas',
+            title: 'SaaS et outils métier',
+            desc: 'Comptes, rôles, tableau de bord et abonnements : le produit que vous vendez ou l’outil de vos équipes.',
+          },
+          {
+            icon: 'api',
+            title: 'API et intégrations',
+            desc: 'Une API REST documentée et testée, avec paiement Mobile Money, notifications et temps réel.',
+          },
+          {
+            icon: 'ecom',
+            title: 'Application e-commerce',
+            desc: 'Catalogue, commandes et paiement en ligne, avec un back-office pour piloter l’activité.',
+          },
+          {
+            icon: 'mobile',
+            title: 'Application mobile',
+            desc: 'iOS et Android, de la maquette à la publication, reliées à votre back-end.',
+          },
+        ],
       },
     ],
   },
